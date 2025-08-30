@@ -1,3 +1,5 @@
+# LEGO slot:1 autostart
+
 import utime
 import motor
 import motor_pair
