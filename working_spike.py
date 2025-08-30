@@ -56,7 +56,8 @@ def normalize_angle(a):
 def yaw_deg():
     """
     SPIKE lessons API: use motion_sensor.tilt_angles()
-    The first value of the tuple is yaw in 0.1° (decidegrees) and sign-inverted vs app.
+    The first value of the tuple is yaw in 0.1° (decidegrees) and
+    sign-inverted vs app.
     Multiply by -0.1 to match the app/blocks convention.
     """
     try:
@@ -164,7 +165,8 @@ def line_follow_speed_gain_target_lineside_port(
     speed, gain, target, lineside, color_port
 ):
     """
-    Line Follow - Speed, Gain, Target, LineSide (1 = light on right), Port for color sensor.
+    Line Follow - Speed, Gain, Target, LineSide (1 = light on right),
+    Port for color sensor.
     Uses individual motor.run(...) (deg/sec) to drive.
     """
     global n_Error
@@ -197,8 +199,12 @@ def gyro_turn_steering_heading_speed(steering, heading, speed):
     using motor_pair.move(...) API from the lessons.
     """
     steering_v = int(_to_float(steering)) if steering not in (None, "") else 0
-    target_v = normalize_angle(_to_float(heading) if heading not in (None, "") else 0.0)
-    speed_v = int(_to_float(speed)) if speed not in (None, "") else DEFAULT_SPEED_PCT
+    target_v = normalize_angle(
+        _to_float(heading) if heading not in (None, "") else 0.0
+    )
+    speed_v = (
+        int(_to_float(speed)) if speed not in (None, "") else DEFAULT_SPEED_PCT
+    )
 
     pair_setup()
     # Reset yaw baseline per lessons guidance
@@ -218,14 +224,20 @@ def gyro_follow_heading_gain_speed_distance_condition(
     heading, gain, speed, distance, condition
 ):
     """
-    Gyro Follow - keep heading using proportional steering until distance reached or condition True.
-    Uses motor_pair.move(...) with proportional steering; distance checked on RIGHT motor degrees.
+    Gyro Follow - keep heading using proportional steering until distance
+    reached or condition True.
+    Uses motor_pair.move(...) with proportional steering; distance checked
+    on RIGHT motor degrees.
     """
     global n_TargetHeading, n_CurrentHeading, n_Error
 
-    target_v = normalize_angle(_to_float(heading) if heading not in (None, "") else 0.0)
+    target_v = normalize_angle(
+        _to_float(heading) if heading not in (None, "") else 0.0
+    )
     kP = _to_float(gain) if gain not in (None, "") else 1.0
-    speed_v = int(_to_float(speed)) if speed not in (None, "") else DEFAULT_SPEED_PCT
+    speed_v = (
+        int(_to_float(speed)) if speed not in (None, "") else DEFAULT_SPEED_PCT
+    )
 
     n_TargetHeading = target_v
 
@@ -243,7 +255,8 @@ def gyro_follow_heading_gain_speed_distance_condition(
     # Follow loop
     while True:
         n_CurrentHeading = yaw_deg()
-        err = shortest_error(n_TargetHeading, n_CurrentHeading)  # in [-180, 180]
+        err = shortest_error(n_TargetHeading, n_CurrentHeading)
+        # (in [-180, 180])
         n_Error = err * kP
 
         steering_cmd = int(clamp(n_Error, -100, 100))
