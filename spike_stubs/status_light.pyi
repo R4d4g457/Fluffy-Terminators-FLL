@@ -1,0 +1,6 @@
+
+def on(color: str) -> None:
+    """Turn the hub status light on to a named color.""" ...
+
+def off() -> None:
+    """Turn the hub status light off.""" ...

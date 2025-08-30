@@ -1,0 +1,15 @@
+{
+  "python.languageServer": "Pylance",
+  "python.analysis.typeCheckingMode": "basic",
+
+  // Tell Pylance where your *.pyi live:
+  "python.analysis.stubPath": "./spike_stubs",
+
+  // Also add them to import resolution:
+  "python.analysis.extraPaths": ["./spike_stubs"],
+
+  // (Optional) Silence the “no module source” squiggles
+  "python.analysis.diagnosticSeverityOverrides": {
+    "reportMissingModuleSource": "none"
+  }
+}

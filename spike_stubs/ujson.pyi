@@ -1,0 +1,6 @@
+
+from typing import Any
+def dumps(obj: Any) -> str:
+    """Serialize Python object *obj* to a JSON-formatted str.""" ...
+def loads(s: str) -> Any:
+    """Deserialize JSON document *s* to Python objects.""" ...

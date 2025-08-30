@@ -1,0 +1,6 @@
+
+from typing import Any, Tuple
+def pack(fmt: str, *values: Any) -> bytes:
+    """Pack values according to *fmt* into a bytes object.""" ...
+def unpack(fmt: str, data: bytes) -> Tuple[Any, ...]:
+    """Unpack from *data* according to *fmt*, returning a tuple.""" ...

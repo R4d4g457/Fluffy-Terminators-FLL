@@ -1,0 +1,9 @@
+
+def play_sound(name: str) -> None:
+    """Play a bundled sound by *name* (if available in the app environment).""" ...
+
+def start() -> None:
+    """Hook called when the app starts (environment-specific).""" ...
+
+def stop() -> None:
+    """Hook called when the app stops (environment-specific).""" ...

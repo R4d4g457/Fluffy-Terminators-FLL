@@ -1,0 +1,9 @@
+
+def force(p: object) -> int:
+    """Return the measured force/pressure value (range depends on firmware).""" ...
+
+def pressed(p: object) -> int:
+    """Return 1 if pressed, 0 if not pressed.""" ...
+
+def raw(p: object) -> int:
+    """Return the raw ADC value from the force sensor.""" ...

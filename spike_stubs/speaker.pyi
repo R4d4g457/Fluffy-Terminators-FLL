@@ -1,0 +1,9 @@
+
+def beep(frequency: int, duration: int) -> None:
+    """Play a tone at *frequency* Hz for *duration* ms.""" ...
+
+def start_beep(frequency: int) -> None:
+    """Start a continuous tone at *frequency* Hz until stop() is called.""" ...
+
+def stop() -> None:
+    """Stop any ongoing tone.""" ...

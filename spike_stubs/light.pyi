@@ -1,0 +1,9 @@
+
+def on(color: str) -> None:
+    """Turn the hub light on to a named color (implementation-defined set).""" ...
+
+def off() -> None:
+    """Turn the hub light off.""" ...
+
+def rgb(r: int, g: int, b: int) -> None:
+    """Set the hub light to an RGB color (0..255 each).""" ...
