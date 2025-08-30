@@ -144,14 +144,6 @@ def get_reflected_light(p, default=50):
         return float(default)
 
 
-def is_force_pressed(p):
-    """True if force sensor on port is pressed (lessons API)."""
-    try:
-        return bool(force_sensor.pressed(p))
-    except Exception:
-        return False
-
-
 # ---------------- variables used in blocks ----------------
 
 n_Error = 0.0
