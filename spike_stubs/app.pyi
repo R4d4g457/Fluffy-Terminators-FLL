@@ -56,6 +56,9 @@ class _Music:
         """Play a single note (MIDI note number) for *duration* ms with *instrument* and *volume*.""" ...
     def play_drum(self, drum: int, duration: int = 100, volume: int = 100) -> Awaitable[None]:
         """Play a drum sound for *duration* ms at *volume*.""" ...
+    def play_instrument(self, instrument: int, duration: int = 500, volume: int = 100) -> Awaitable[None]:
+        """Play a held tone using *instrument* for *duration* ms at *volume*.
+        Useful when you want to specify the instrument explicitly without providing a note sequence.""" ...
     def set_tempo(self, bpm: int) -> None:
         """Set the tempo in beats per minute for sequence playback.""" ...
     def get_tempo(self) -> int:
@@ -63,6 +66,5 @@ class _Music:
     def stop(self) -> None:
         """Stop any ongoing music/drum playback.""" ...
 
-# Instances exposed via 'from app import sound, music'
 sound: _Sound
 music: _Music
