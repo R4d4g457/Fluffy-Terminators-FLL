@@ -247,6 +247,61 @@ def main():
         #        condition=lambda: color_sensor.color(port.F) == color.GREEN,
     )
 
+    line_follow_speed_gain_target_lineside_port(
+        speed=75,
+        gain=0.5,
+        target=0,
+        lineside=1,
+        color_port=port.F,
+        distance=600,
+    )
+
+    gyro_turn_steering_heading_speed(
+        steering=-100,
+        heading=-120,
+        speed=40,
+    )
+
+    gyro_follow_heading_gain_speed_distance_condition(
+        heading=-120,
+        gain=0.75,
+        speed=75,
+        distance=720,
+    )
+
+    gyro_turn_steering_heading_speed(
+        steering=-100,
+        heading=150,
+        speed=40,
+    )
+
+    gyro_follow_heading_gain_speed_distance_condition(
+        heading=150,
+        gain=0.75,
+        speed=75,
+        distance=450,
+    )
+
+    gyro_follow_heading_gain_speed_distance_condition(
+        heading=150,
+        gain=-0.75,
+        speed=-75,
+        distance=-100,
+    )
+
+    gyro_turn_steering_heading_speed(
+        steering=-100,
+        heading=-30,
+        speed=40,
+    )
+
+    gyro_follow_heading_gain_speed_distance_condition(
+        heading=-30,
+        gain=0.75,
+        speed=75,
+        distance=200,
+    )
+
     print("done")
 
 
