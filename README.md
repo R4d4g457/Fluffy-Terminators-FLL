@@ -1,4 +1,4 @@
-# Fluffy Terminators FLL 🐰🤖🧱
+# Fluffy Terminators FLL 
 
 ### Development within Visual Studio Code
 
