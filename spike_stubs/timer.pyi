@@ -1,6 +1,6 @@
 
+"""Simple timer utilities (subset)."""
 def now() -> int:
     """Return milliseconds since timer start/reset.""" ...
-
 def reset() -> None:
     """Reset the internal timer to zero.""" ...
