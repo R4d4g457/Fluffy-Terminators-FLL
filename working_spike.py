@@ -86,14 +86,6 @@ def run_motor_pct(p, pct):
     motor.run(p, pct_to_dps(pct))
 
 
-def degrees_counted_safe(p):
-    """Use relative_position as 'degrees counted'."""
-    try:
-        return float(motor.relative_position(p) or 0.0)
-    except Exception:
-        return 0.0
-
-
 def reset_degrees(p):
     """This API requires (port, position)."""
     try:
@@ -148,7 +140,7 @@ n_CurrentHeading = 0.0
 
 
 def line_follow_speed_gain_target_lineside_port(
-    speed, gain, target, lineside, color_port
+    speed, gain, target=50, lineside=1, color_port=port.C, distance=None, condition=None
 ):
     """
     Line Follow - Speed, Gain, Target, LineSide (1 = light on right),
@@ -156,27 +148,41 @@ def line_follow_speed_gain_target_lineside_port(
     Uses individual motor.run(...) (deg/sec) to drive.
     """
     global n_Error
-    speed_v = speed if speed not in (None, "") else 50.0
-    gain_v = gain if gain not in (None, "") else 1.0
-    target_v = target if target not in (None, "") else 50.0
-    lineside_v = int(lineside) if lineside not in (None, "") else 1
     cs_port = color_port if color_port not in (None, "") else port.C
 
-    reflect_v = get_reflected_light(cs_port, default=50)
+    while True:
+        reflect_v = get_reflected_light(cs_port, default=50)
 
-    # Compute error depending on side of the line
-    if lineside_v == 1:
-        n_Error = float(target_v - reflect_v) * gain_v
-    else:
-        n_Error = float(reflect_v - target_v) * gain_v
+        # Compute error depending on side of the line
+        if lineside == 1:
+            n_Error = float(target - reflect_v) * gain
+        else:
+            n_Error = float(reflect_v - target) * gain
 
-    # Left power= -1 * (Speed + n_Error)
-    # Right power =    (Speed - n_Error)
-    left_pct = int(clamp(-(speed_v + n_Error), -100, 100))
-    right_pct = int(clamp((speed_v - n_Error), -100, 100))
+        # Left power= -1 * (Speed + n_Error)
+        # Right power =    (Speed - n_Error)
+        left_pct = int(clamp(-(speed + n_Error), -100, 100))
+        right_pct = int(clamp((speed - n_Error), -100, 100))
 
-    motor.run(LEFT, pct_to_dps(left_pct))
-    motor.run(RIGHT, pct_to_dps(right_pct))
+        motor.run(LEFT, pct_to_dps(left_pct))
+        motor.run(RIGHT, pct_to_dps(right_pct))
+
+        # Exit conditions
+        done = False
+        if distance is not None:
+            if abs(motor.relative_position(RIGHT)) >= float(distance):
+                done = True
+
+        try:
+            if condition is not None and condition():
+                done = True
+        except Exception:
+            pass
+
+        if done:
+            break
+
+        utime.sleep_ms(10)
 
 
 def gyro_turn_steering_heading_speed(steering, heading, speed):
@@ -224,11 +230,7 @@ def gyro_follow_heading_gain_speed_distance_condition(
     motion_sensor.reset_yaw(0)
     reset_degrees(RIGHT)
 
-    cond_fn = condition if callable(condition) else (lambda: False)
-
-    dist_degs = None
-    if distance not in (None, ""):
-        dist_degs = distance
+    # assert condition is None or callable(condition)
 
     # Follow loop
     while True:
@@ -242,12 +244,12 @@ def gyro_follow_heading_gain_speed_distance_condition(
 
         # Exit conditions
         done = False
-        if dist_degs is not None:
-            if abs(degrees_counted_safe(RIGHT)) >= float(dist_degs):
+        if distance is not None:
+            if abs(motor.relative_position(RIGHT)) >= float(distance):
                 done = True
 
         try:
-            if cond_fn():
+            if condition is not None and condition():
                 done = True
         except Exception:
             pass
