@@ -86,14 +86,6 @@ def run_motor_pct(p, pct):
     motor.run(p, pct_to_dps(pct))
 
 
-def reset_degrees(p):
-    """This API requires (port, position)."""
-    try:
-        motor.reset_relative_position(p, 0)
-    except Exception:
-        pass
-
-
 # Motor-pair setup (matches lessons API)
 PAIR_ID = motor_pair.PAIR_1
 
@@ -101,17 +93,6 @@ PAIR_ID = motor_pair.PAIR_1
 def pair_setup():
     # pair A+B as the driving base
     motor_pair.pair(PAIR_ID, LEFT, RIGHT)
-
-
-def pair_move_steering(steering, speed_pct):
-    """
-    steering: -100..100 (positive => turn right)
-    speed_pct: -100..100 mapped to velocity (deg/sec)
-    """
-    st = int(clamp(steering, -100, 100))
-    vel = pct_to_dps(speed_pct)
-    # lessons API: motor_pair.move(pair_id, steering, velocity=...)
-    motor_pair.move(PAIR_ID, st, velocity=vel)
 
 
 def pair_stop():
@@ -190,16 +171,14 @@ def gyro_turn_steering_heading_speed(steering, heading, speed):
     Gyro Turn - run with steering until yaw reaches heading (wrap-aware),
     using motor_pair.move(...) API from the lessons.
     """
-    steering_v = int(steering) if steering not in (None, "") else 0
-    target_v = normalize_angle(heading if heading not in (None, "") else 0.0)
-    speed_v = int(speed) if speed not in (None, "") else DEFAULT_SPEED_PCT
+    target_v = normalize_angle(heading)
 
     pair_setup()
     # Reset yaw baseline per lessons guidance
     motion_sensor.reset_yaw(0)
 
     # Start moving with steering
-    pair_move_steering(steering_v, speed_v)
+    motor_pair.move(PAIR_ID, steering, velocity=speed)
 
     # TOL of 2 degrees
     TOL = 2.0
@@ -209,7 +188,7 @@ def gyro_turn_steering_heading_speed(steering, heading, speed):
 
 
 def gyro_follow_heading_gain_speed_distance_condition(
-    heading, gain, speed, distance, condition
+    heading, gain, speed, distance, condition=None
 ):
     """
     Gyro Follow - keep heading using proportional steering until distance
@@ -219,28 +198,20 @@ def gyro_follow_heading_gain_speed_distance_condition(
     """
     global n_TargetHeading, n_CurrentHeading, n_Error
 
-    target_v = normalize_angle(heading if heading not in (None, "") else 0.0)
-    kP = gain if gain not in (None, "") else 1.0
-    speed_v = int(speed) if speed not in (None, "") else DEFAULT_SPEED_PCT
-
-    n_TargetHeading = target_v
+    n_TargetHeading = normalize_angle(heading)
 
     pair_setup()
-    # Reset yaw and encoder used for distance (RIGHT)
-    motion_sensor.reset_yaw(0)
-    reset_degrees(RIGHT)
-
-    # assert condition is None or callable(condition)
+    # Reset yaw and encoder used for distance
+    motor.reset_relative_position(RIGHT, 0)
+    motor.reset_relative_position(LEFT, 0)
 
     # Follow loop
     while True:
         n_CurrentHeading = yaw_deg()
-        err = shortest_error(n_TargetHeading, n_CurrentHeading)
-        # (in [-180, 180])
-        n_Error = err * kP
+        n_Error = shortest_error(n_TargetHeading, n_CurrentHeading) * gain
 
         steering_cmd = int(clamp(n_Error, -100, 100))
-        pair_move_steering(steering_cmd, speed_v)
+        motor_pair.move(PAIR_ID, steering_cmd, velocity=speed)
 
         # Exit conditions
         done = False
@@ -272,8 +243,8 @@ def main():
         heading=0,
         gain=0.75,
         speed=75,
-        distance=13000,
-        condition=lambda: color_sensor.color(port.F) == color.GREEN,
+        distance=1300,
+        #        condition=lambda: color_sensor.color(port.F) == color.GREEN,
     )
 
     print("done")
