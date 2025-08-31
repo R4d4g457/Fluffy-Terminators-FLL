@@ -1,10 +1,11 @@
 # LEGO slot:1 autostart
 
-import utime
-import motor
-import motor_pair
+import color
 import color_sensor
 import force_sensor
+import motor
+import motor_pair
+import utime
 from hub import port, motion_sensor
 
 
@@ -193,12 +194,8 @@ def gyro_turn_steering_heading_speed(steering, heading, speed):
     using motor_pair.move(...) API from the lessons.
     """
     steering_v = int(_to_float(steering)) if steering not in (None, "") else 0
-    target_v = normalize_angle(
-        _to_float(heading) if heading not in (None, "") else 0.0
-    )
-    speed_v = (
-        int(_to_float(speed)) if speed not in (None, "") else DEFAULT_SPEED_PCT
-    )
+    target_v = normalize_angle(_to_float(heading) if heading not in (None, "") else 0.0)
+    speed_v = int(_to_float(speed)) if speed not in (None, "") else DEFAULT_SPEED_PCT
 
     pair_setup()
     # Reset yaw baseline per lessons guidance
@@ -225,13 +222,9 @@ def gyro_follow_heading_gain_speed_distance_condition(
     """
     global n_TargetHeading, n_CurrentHeading, n_Error
 
-    target_v = normalize_angle(
-        _to_float(heading) if heading not in (None, "") else 0.0
-    )
+    target_v = normalize_angle(_to_float(heading) if heading not in (None, "") else 0.0)
     kP = _to_float(gain) if gain not in (None, "") else 1.0
-    speed_v = (
-        int(_to_float(speed)) if speed not in (None, "") else DEFAULT_SPEED_PCT
-    )
+    speed_v = int(_to_float(speed)) if speed not in (None, "") else DEFAULT_SPEED_PCT
 
     n_TargetHeading = target_v
 
@@ -282,14 +275,12 @@ def gyro_follow_heading_gain_speed_distance_condition(
 def main():
     print("yo yo")
 
-    # Example condition: stop when Force Sensor on port C is pressed.
-    def cond():
-        force = force_sensor.force(port.C)
-        print("force: ", force)
-        return force < 10
-
     gyro_follow_heading_gain_speed_distance_condition(
-        heading=40, gain=2, speed=20, distance=200, condition=cond
+        heading=0,
+        gain=0.75,
+        speed=75,
+        distance=13000,
+        condition=lambda: color_sensor.color(port.F) == color.GREEN,
     )
 
     print("done")
