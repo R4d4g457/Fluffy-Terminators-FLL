@@ -37,15 +37,6 @@ def clamp(v, lo, hi):
     return v
 
 
-def _to_float(x):
-    if x is None:
-        return 0.0
-    try:
-        return float(x)
-    except Exception:
-        return 0.0
-
-
 def normalize_angle(a):
     """Normalize to (-180, 180]."""
     a = float(a)
@@ -86,7 +77,7 @@ MAX_DPS = 1000  # map %-speed to deg/sec for motor.run / motor_pair.move
 
 
 def pct_to_dps(pct):
-    pct_i = clamp(_to_float(pct), -100, 100)
+    pct_i = clamp(pct, -100, 100)
     return int(pct_i * MAX_DPS / 100.0)
 
 
@@ -125,7 +116,7 @@ def pair_move_steering(steering, speed_pct):
     steering: -100..100 (positive => turn right)
     speed_pct: -100..100 mapped to velocity (deg/sec)
     """
-    st = int(clamp(_to_float(steering), -100, 100))
+    st = int(clamp(steering, -100, 100))
     vel = pct_to_dps(speed_pct)
     # lessons API: motor_pair.move(pair_id, steering, velocity=...)
     motor_pair.move(PAIR_ID, st, velocity=vel)
@@ -165,10 +156,10 @@ def line_follow_speed_gain_target_lineside_port(
     Uses individual motor.run(...) (deg/sec) to drive.
     """
     global n_Error
-    speed_v = _to_float(speed) if speed not in (None, "") else 50.0
-    gain_v = _to_float(gain) if gain not in (None, "") else 1.0
-    target_v = _to_float(target) if target not in (None, "") else 50.0
-    lineside_v = int(_to_float(lineside)) if lineside not in (None, "") else 1
+    speed_v = speed if speed not in (None, "") else 50.0
+    gain_v = gain if gain not in (None, "") else 1.0
+    target_v = target if target not in (None, "") else 50.0
+    lineside_v = int(lineside) if lineside not in (None, "") else 1
     cs_port = color_port if color_port not in (None, "") else port.C
 
     reflect_v = get_reflected_light(cs_port, default=50)
@@ -193,9 +184,9 @@ def gyro_turn_steering_heading_speed(steering, heading, speed):
     Gyro Turn - run with steering until yaw reaches heading (wrap-aware),
     using motor_pair.move(...) API from the lessons.
     """
-    steering_v = int(_to_float(steering)) if steering not in (None, "") else 0
-    target_v = normalize_angle(_to_float(heading) if heading not in (None, "") else 0.0)
-    speed_v = int(_to_float(speed)) if speed not in (None, "") else DEFAULT_SPEED_PCT
+    steering_v = int(steering) if steering not in (None, "") else 0
+    target_v = normalize_angle(heading if heading not in (None, "") else 0.0)
+    speed_v = int(speed) if speed not in (None, "") else DEFAULT_SPEED_PCT
 
     pair_setup()
     # Reset yaw baseline per lessons guidance
@@ -222,9 +213,9 @@ def gyro_follow_heading_gain_speed_distance_condition(
     """
     global n_TargetHeading, n_CurrentHeading, n_Error
 
-    target_v = normalize_angle(_to_float(heading) if heading not in (None, "") else 0.0)
-    kP = _to_float(gain) if gain not in (None, "") else 1.0
-    speed_v = int(_to_float(speed)) if speed not in (None, "") else DEFAULT_SPEED_PCT
+    target_v = normalize_angle(heading if heading not in (None, "") else 0.0)
+    kP = gain if gain not in (None, "") else 1.0
+    speed_v = int(speed) if speed not in (None, "") else DEFAULT_SPEED_PCT
 
     n_TargetHeading = target_v
 
@@ -237,7 +228,7 @@ def gyro_follow_heading_gain_speed_distance_condition(
 
     dist_degs = None
     if distance not in (None, ""):
-        dist_degs = _to_float(distance)
+        dist_degs = distance
 
     # Follow loop
     while True:
