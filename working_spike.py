@@ -48,16 +48,9 @@ def normalize_angle(a):
 
 
 def yaw_deg():
-    """
-    SPIKE lessons API: use motion_sensor.tilt_angles()
-    The first value of the tuple is yaw in 0.1° (decidegrees) and
-    sign-inverted vs app.
-    Multiply by -0.1 to match the app/blocks convention.
-    """
     try:
-        # tuple = (yaw, pitch, roll) in 0.1°
         dd_yaw = motion_sensor.tilt_angles()[0]  # decidegrees
-        return normalize_angle(float(dd_yaw) * -0.1)
+        return normalize_angle(float(dd_yaw))
     except Exception:
         return 0.0
 
@@ -72,6 +65,7 @@ def shortest_error(target, current):
 LEFT = port.A
 RIGHT = port.B
 PAIR_ID = motor_pair.PAIR_1
+GAIN = 0.1
 
 MAX_DPS = 1000  # map %-speed to deg/sec for motor.run / motor_pair.move
 
@@ -189,8 +183,12 @@ def gyro_follow_heading_gain_speed_distance_condition(
         # Exit conditions
         done = False
         if distance is not None:
-            if abs(motor.relative_position(RIGHT)) >= float(distance):
-                done = True
+            if distance > 0:
+                if abs(motor.relative_position(RIGHT)) >= float(distance):
+                    done = True
+            else:
+                if abs(motor.relative_position(LEFT)) <= float(distance):
+                    done = True
 
         try:
             if condition is not None and condition():
@@ -211,67 +209,67 @@ def gyro_follow_heading_gain_speed_distance_condition(
 
 def main():
     print("yo yo yo")
-    motor_pair.pair(PAIR_ID, LEFT, RIGHT)
+    motor_pair.pair(PAIR_ID, RIGHT, LEFT)
 
     gyro_follow_heading_gain_speed_distance_condition(
         heading=0,
-        gain=0.75,
+        gain=GAIN,
         speed=500,
         distance=1300,
         #        condition=lambda: color_sensor.color(port.F) == color.GREEN,
     )
 
-    line_follow_speed_gain_target_lineside_port(
-        speed=500,
-        gain=0.5,
-        target=0,
-        lineside=1,
-        color_port=port.F,
-        distance=600,
-    )
+    # line_follow_speed_gain_target_lineside_port(
+    #     speed=500,
+    #     gain=0.5,
+    #     target=0,
+    #     lineside=1,
+    #     color_port=port.F,
+    #     distance=600,
+    # )
 
     gyro_turn_steering_heading_speed(
-        steering=-100,
+        steering=100,
         heading=-120,
         speed=250,
     )
 
     gyro_follow_heading_gain_speed_distance_condition(
         heading=-120,
-        gain=0.75,
+        gain=GAIN,
         speed=500,
         distance=720,
     )
 
     gyro_turn_steering_heading_speed(
-        steering=-100,
+        steering=100,
         heading=150,
         speed=250,
     )
 
     gyro_follow_heading_gain_speed_distance_condition(
         heading=150,
-        gain=0.75,
+        gain=GAIN,
         speed=500,
         distance=450,
     )
 
     gyro_follow_heading_gain_speed_distance_condition(
         heading=150,
-        gain=-0.75,
+        gain=-GAIN,
         speed=-500,
         distance=-100,
     )
 
     gyro_turn_steering_heading_speed(
-        steering=-100,
+        steering=100,
         heading=-30,
         speed=250,
     )
 
     gyro_follow_heading_gain_speed_distance_condition(
         heading=-30,
-        gain=0.75,
+        gain=GAIN,
         speed=500,
         distance=200,
     )
