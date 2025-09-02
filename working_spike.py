@@ -147,13 +147,10 @@ def gyro_turn_steering_heading_speed(steering, heading, speed):
     Gyro Turn - run with steering until yaw reaches heading (wrap-aware),
     using motor_pair.move(...) API from the lessons.
     """
-    target_v = normalize_angle(heading)
 
-    motor_pair.pair(PAIR_ID, LEFT, RIGHT)
-    # Reset yaw baseline per lessons guidance
+    target_v = normalize_angle(heading)
     motion_sensor.reset_yaw(0)
 
-    # Start moving with steering
     motor_pair.move(PAIR_ID, steering, velocity=speed)
 
     # TOL of 2 degrees
@@ -177,7 +174,6 @@ def gyro_follow_heading_gain_speed_distance_condition(
 
     n_TargetHeading = normalize_angle(heading)
 
-    motor_pair.pair(PAIR_ID, LEFT, RIGHT)
     # Reset yaw and encoder used for distance
     motor.reset_relative_position(RIGHT, 0)
     motor.reset_relative_position(LEFT, 0)
@@ -214,7 +210,8 @@ def gyro_follow_heading_gain_speed_distance_condition(
 
 
 def main():
-    print("yo yo")
+    print("yo yo yo")
+    motor_pair.pair(PAIR_ID, LEFT, RIGHT)
 
     gyro_follow_heading_gain_speed_distance_condition(
         heading=0,
