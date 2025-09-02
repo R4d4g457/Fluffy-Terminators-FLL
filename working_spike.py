@@ -71,32 +71,14 @@ def shortest_error(target, current):
 
 LEFT = port.A
 RIGHT = port.B
+PAIR_ID = motor_pair.PAIR_1
 
-DEFAULT_SPEED_PCT = 50  # your "percent" notion
 MAX_DPS = 1000  # map %-speed to deg/sec for motor.run / motor_pair.move
 
 
 def pct_to_dps(pct):
     pct_i = clamp(pct, -100, 100)
     return int(pct_i * MAX_DPS / 100.0)
-
-
-def run_motor_pct(p, pct):
-    """Drive motor at approx 'pct' [-100..100] by mapping to deg/sec."""
-    motor.run(p, pct_to_dps(pct))
-
-
-# Motor-pair setup (matches lessons API)
-PAIR_ID = motor_pair.PAIR_1
-
-
-def pair_setup():
-    # pair A+B as the driving base
-    motor_pair.pair(PAIR_ID, LEFT, RIGHT)
-
-
-def pair_stop():
-    motor_pair.stop(PAIR_ID)
 
 
 # ---------------- sensor helpers ----------------
@@ -111,12 +93,6 @@ def get_reflected_light(p, default=50):
         return float(default)
 
 
-# ---------------- variables used in blocks ----------------
-
-n_Error = 0.0
-n_TargetHeading = 0.0
-n_CurrentHeading = 0.0
-
 # ---------------- My Blocks (custom procedures) ----------------
 
 
@@ -128,7 +104,7 @@ def line_follow_speed_gain_target_lineside_port(
     Port for color sensor.
     Uses individual motor.run(...) (deg/sec) to drive.
     """
-    global n_Error
+    n_Error = 0.0
     cs_port = color_port if color_port not in (None, "") else port.C
 
     while True:
@@ -173,7 +149,7 @@ def gyro_turn_steering_heading_speed(steering, heading, speed):
     """
     target_v = normalize_angle(heading)
 
-    pair_setup()
+    motor_pair.pair(PAIR_ID, LEFT, RIGHT)
     # Reset yaw baseline per lessons guidance
     motion_sensor.reset_yaw(0)
 
@@ -184,7 +160,7 @@ def gyro_turn_steering_heading_speed(steering, heading, speed):
     TOL = 2.0
     wait_until(lambda: abs(shortest_error(target_v, yaw_deg())) <= TOL)
 
-    pair_stop()
+    motor_pair.stop(PAIR_ID)
 
 
 def gyro_follow_heading_gain_speed_distance_condition(
@@ -196,11 +172,12 @@ def gyro_follow_heading_gain_speed_distance_condition(
     Uses motor_pair.move(...) with proportional steering; distance checked
     on RIGHT motor degrees.
     """
-    global n_TargetHeading, n_CurrentHeading, n_Error
+
+    n_Error = 0.0
 
     n_TargetHeading = normalize_angle(heading)
 
-    pair_setup()
+    motor_pair.pair(PAIR_ID, LEFT, RIGHT)
     # Reset yaw and encoder used for distance
     motor.reset_relative_position(RIGHT, 0)
     motor.reset_relative_position(LEFT, 0)
@@ -230,7 +207,7 @@ def gyro_follow_heading_gain_speed_distance_condition(
 
         utime.sleep_ms(10)
 
-    pair_stop()
+    motor_pair.stop(PAIR_ID)
 
 
 # ---------------- main ----------------
