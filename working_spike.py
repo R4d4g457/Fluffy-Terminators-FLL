@@ -152,6 +152,8 @@ def gyro_turn_steering_heading_speed(steering, heading, speed):
     wait_until(lambda: abs(shortest_error(target_v, yaw_deg())) <= TOL)
 
     motor_pair.stop(PAIR_ID)
+    utime.sleep_ms(100)
+    print(yaw_deg())
 
 
 def gyro_follow_heading_gain_speed_distance_condition(
@@ -202,6 +204,8 @@ def gyro_follow_heading_gain_speed_distance_condition(
         utime.sleep_ms(10)
 
     motor_pair.stop(PAIR_ID)
+    utime.sleep_ms(100)
+    print(yaw_deg())
 
 
 # ---------------- main ----------------
