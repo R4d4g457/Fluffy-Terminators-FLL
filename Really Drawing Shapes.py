@@ -210,6 +210,14 @@ def drawSquare(side_cm, speed):
     pass
 
 
+def motor1Pos():
+    pass
+
+
+def motor2Pos():
+    pass
+
+
 # ---------------- main ----------------
 
 
