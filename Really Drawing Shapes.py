@@ -7,6 +7,7 @@ import motor
 import motor_pair
 import utime
 from hub import port, motion_sensor
+import math
 
 
 def wait_until(pred, timeout=None, poll_ms=10):
@@ -211,7 +212,13 @@ def drawSquare(side_cm, speed):
 
 
 def motor1Pos():
-    pass
+    # Idk what im doing, trying Sine rule for fun
+    motor1 = port.A
+    arm_length = int(input("Arm Length: "))
+    arm_angle = int(input("Arm Angle: "))
+    length_a = arm_length * (math.sin(arm_angle) / math.sin(90))
+    length_b = arm_length * (math.sin(90 - arm_angle) / math.sin(90))
+    print("length A: {length_a}, Length B: {length_b}")
 
 
 def motor2Pos():
@@ -222,6 +229,7 @@ def motor2Pos():
 
 
 def main():
+    motor1Pos()
     pass
 
 
