@@ -78,7 +78,7 @@ def pct_to_dps(pct):
 
 
 def get_reflected_light(p, default=50):
-    """Reflected light 0..100% from Color Sensor (lessons API)."""
+    """Reflected light 0..100% from Color Sensor."""
     try:
         val = color_sensor.reflection(p)
         return float(val if val is not None else default)
@@ -127,11 +127,8 @@ def line_follow_speed_gain_target_lineside_port(
                 if motor.relative_position(LEFT) <= float(distance):
                     done = True
 
-        try:
-            if condition is not None and condition():
-                done = True
-        except Exception:
-            pass
+        if condition is not None and condition():
+            done = True
 
         if done:
             break
@@ -189,14 +186,11 @@ def gyro_follow_heading_gain_speed_distance_condition(
                 if abs(motor.relative_position(RIGHT)) >= float(distance):
                     done = True
             else:
-                if motor.relative_position(LEFT) <= float(distance):
+                if motor.relative_position(RIGHT) <= float(distance):
                     done = True
 
-        try:
-            if condition is not None and condition():
-                done = True
-        except Exception:
-            pass
+        if condition is not None and condition():
+            done = True
 
         if done:
             break
@@ -209,148 +203,219 @@ def gyro_follow_heading_gain_speed_distance_condition(
 # ---------------- main ----------------
 
 
-def William_main():
+def Tara_main():
+    GAIN = 1.3
+    print("yo yo yo")
+    motor_pair.pair(PAIR_ID, LEFT, RIGHT)
+    motion_sensor.reset_yaw(0)
+    utime.sleep_ms(500)
+
+    gyro_follow_heading_gain_speed_distance_condition(
+        heading=0,
+        gain=GAIN,
+        speed=600,
+        distance=1525,
+    )
+
+    gyro_follow_heading_gain_speed_distance_condition(
+        heading=0,
+        gain=-GAIN,
+        speed=-475,
+        distance=-40,
+    )
+
+    gyro_turn_steering_heading_speed(
+        steering=-100,
+        heading=-75,
+        speed=200,
+    )
+
+    utime.sleep_ms(100)
+
+    gyro_follow_heading_gain_speed_distance_condition(
+        heading=-80,
+        gain=GAIN,
+        speed=400,
+        distance=450,
+    )
+
+    utime.sleep_ms(100)
+
+    gyro_follow_heading_gain_speed_distance_condition(
+        heading=-110,
+        gain=-GAIN,
+        speed=-300,
+        distance=-25,
+    )
+
+    motor.reset_relative_position(port.D, 0)
+    motor.run_to_relative_position(port.D, -160, 150)
+    utime.sleep_ms(1000)
+    motor.run_to_relative_position(port.D, 0, -300)
+    utime.sleep_ms(500)
+
+    gyro_follow_heading_gain_speed_distance_condition(
+        heading=-80,
+        gain=-GAIN,
+        speed=-300,
+        distance=-400,
+    )
+
+    gyro_turn_steering_heading_speed(
+        steering=100,
+        heading=-45,
+        speed=300,
+    )
+
+    utime.sleep_ms(100)
+
+    gyro_follow_heading_gain_speed_distance_condition(
+        heading=45,
+        gain=GAIN,
+        speed=300,
+        distance=100,
+    )
+
+    gyro_turn_steering_heading_speed(
+        steering=100,
+        heading=90,
+        speed=300,
+    )
+
+    utime.sleep_ms(100)
+
+    # gyro_follow_heading_gain_speed_distance_condition(
+    #     heading=90,
+    #     gain=GAIN,
+    #     speed=300,
+    #     distance=100,
+    # )
+
+    # gyro_follow_heading_gain_speed_distance_condition(
+    #     heading=80,
+    #     gain=-GAIN,
+    #     speed=-300,
+    #     distance=-100,
+    # )
+
+    gyro_follow_heading_gain_speed_distance_condition(
+        heading=90,
+        gain=GAIN,
+        speed=500,
+        distance=800,
+    )
+
+    motor.reset_relative_position(port.C, 0)
+    motor.run_to_relative_position(port.C, 160, 200)
+    utime.sleep_ms(1000)
+    motor.run_to_relative_position(port.C, 0, -300)
+    utime.sleep_ms(500)
+
+    print("done")
+
+
+def Zaza_main():
     GAIN = 2
     print("yo yo yo")
-    motor_pair.pair(PAIR_ID, RIGHT, LEFT)
-
-    gyro_follow_heading_gain_speed_distance_condition(
-        heading=0,
-        gain=GAIN,
-        speed=700,
-        distance=1150,
-        # condition=lambda: color_sensor.color(port.E) == color.BLACK,
-    )
-
-    gyro_turn_steering_heading_speed(
-        steering=100,
-        heading=45,
-        speed=300,
-    )
-
-    gyro_follow_heading_gain_speed_distance_condition(
-        heading=45,
-        gain=GAIN,
-        speed=700,
-        distance=300,
-    )
-
-    gyro_turn_steering_heading_speed(
-        steering=100,
-        heading=90,
-        speed=300,
-    )
-
-    gyro_follow_heading_gain_speed_distance_condition(
-        heading=90,
-        gain=GAIN,
-        speed=700,
-        distance=750,
-    )
-
-    gyro_turn_steering_heading_speed(
-        steering=-100,
-        heading=0,
-        speed=300,
-    )
-
-    gyro_follow_heading_gain_speed_distance_condition(
-        heading=0,
-        gain=GAIN,
-        speed=650,
-        distance=None,
-        condition=lambda: color_sensor.color(port.F) == color.YELLOW,
-    )
-
-    gyro_follow_heading_gain_speed_distance_condition(
-        heading=0,
-        gain=-GAIN,
-        speed=-700,
-        distance=-250,
-    )
-
-    gyro_turn_steering_heading_speed(
-        steering=-100,
-        heading=-15,
-        speed=300,
-    )
-
-    gyro_follow_heading_gain_speed_distance_condition(
-        heading=-15,
-        gain=-GAIN,
-        speed=-700,
-        distance=-1000,
-    )
-
-    print("done")
-
-
-def Tara_main():
-    GAIN = 0.2
-    print("yo yo yo")
-    motor_pair.pair(PAIR_ID, RIGHT, LEFT)
-
-    gyro_follow_heading_gain_speed_distance_condition(
-        heading=0,
-        gain=GAIN,
-        speed=700,
-        distance=1200,
-        # condition=lambda: color_sensor.color(port.E) == color.BLACK,
-    )
-
-    gyro_turn_steering_heading_speed(
-        steering=-100,
-        heading=45,
-        speed=300,
-    )
-
-    gyro_follow_heading_gain_speed_distance_condition(
-        heading=45,
-        gain=GAIN,
-        speed=700,
-        distance=300,
-    )
-
-    gyro_turn_steering_heading_speed(
-        steering=-100,
-        heading=80,
-        speed=300,
-    )
-
-    gyro_follow_heading_gain_speed_distance_condition(
-        heading=80,
-        gain=GAIN,
-        speed=700,
-        distance=750,
-    )
-
-    gyro_turn_steering_heading_speed(
-        steering=100,
-        heading=0,
-        speed=300,
-    )
-
-    gyro_follow_heading_gain_speed_distance_condition(
-        heading=0,
-        gain=GAIN,
-        speed=1100,
-        distance=None,
-        condition=lambda: force_sensor.force(port.C) == 0,
-    )
-
-    motor_pair.move_for_time(PAIR_ID, 0, 200)
-    utime.sleep_ms(20)
+    motor_pair.pair(PAIR_ID, LEFT, RIGHT)
     motion_sensor.reset_yaw(0)
-    utime.sleep_ms(20)
+    utime.sleep_ms(500)
+
+    gyro_follow_heading_gain_speed_distance_condition(
+        heading=0,
+        gain=GAIN,
+        speed=600,
+        distance=1525,
+        condition=lambda: color_sensor.color(port.E) == color.RED,
+    )
+
+
+def Annie_main():
+    GAIN = 1.5
+    motor.reset_relative_position(port.D, 0)
+    print("yo yo yo")
+    motor_pair.pair(PAIR_ID, LEFT, RIGHT)
+    motion_sensor.reset_yaw(0)
+    utime.sleep_ms(100)
+    gyro_follow_heading_gain_speed_distance_condition(
+        heading=0,
+        gain=GAIN,
+        speed=600,
+        distance=1000,
+    )
+
+    gyro_turn_steering_heading_speed(
+        steering=100,
+        heading=120,
+        speed=200,
+    )
+
+    gyro_follow_heading_gain_speed_distance_condition(
+        heading=120,
+        gain=GAIN,
+        speed=600,
+        distance=400,
+    )
+
+    gyro_follow_heading_gain_speed_distance_condition(
+        heading=120,
+        gain=-GAIN,
+        speed=-600,
+        distance=-200,
+    )
+
+    gyro_turn_steering_heading_speed(
+        steering=100,
+        heading=180,
+        speed=200,
+    )
+
+    gyro_follow_heading_gain_speed_distance_condition(
+        heading=180,
+        gain=GAIN,
+        speed=600,
+        distance=400,
+    )
+
+    gyro_turn_steering_heading_speed(
+        steering=-100,
+        heading=90,
+        speed=200,
+    )
+
+    gyro_follow_heading_gain_speed_distance_condition(
+        heading=90,
+        gain=GAIN,
+        speed=600,
+        distance=550,
+    )
+
+    gyro_turn_steering_heading_speed(
+        steering=-100,
+        heading=0,
+        speed=200,
+    )
+
+    gyro_follow_heading_gain_speed_distance_condition(
+        heading=0,
+        gain=GAIN,
+        speed=600,
+        distance=50,
+    )
+
+    utime.sleep_ms(100)
+    motor.run_to_relative_position(port.D, -45, 300)
+    utime.sleep_ms(100)
 
     gyro_follow_heading_gain_speed_distance_condition(
         heading=0,
         gain=-GAIN,
-        speed=-700,
-        distance=-1150,
+        speed=-600,
+        distance=-75,
     )
 
-    print("done")
+    motor.run_to_relative_position(port.D, -90, 300)
+    utime.sleep_ms(100)
 
 
 if __name__ == "__main__":
