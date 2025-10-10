@@ -330,7 +330,7 @@ def Zaza_main():
     )
 
 
-def Annie_main():
+def Anneuryysm_main():
     GAIN = 1.5
     motor.reset_relative_position(port.D, 0)
     print("yo yo yo")
@@ -418,35 +418,27 @@ def Annie_main():
     utime.sleep_ms(100)
 
 
-def Stasia_main():
+def Stonks_main():
     motor.reset_relative_position(port.C, 0)
     motor.reset_relative_position(port.D, 0)
+    motor_pair.move_for_degrees(motor_pair.PAIR_1, 0, 833)
 
-    motor_pair.move_for_degrees(motor_pair.PAIR_1, 0, 600)
-    motor.run_for_degrees(port.C, 180, 600)
-    motor_pair.move_for_degrees(motor_pair.PAIR_1, 0, -300)
-    motor.run_for_degrees(port.C, -180, -600)
-    motor_pair.move_for_degrees(motor_pair.PAIR_1, 0, 300)
-    motor.run_for_degrees(port.C, 180, 600)
-    motor_pair.move_for_degrees(motor_pair.PAIR_1, 0, -300)
-    motor.run_for_degrees(port.C, -180, -600)
-    motor_pair.move_for_degrees(motor_pair.PAIR_1, 0, 300)
-    motor.run_for_degrees(port.C, 180, 600)
-    motor_pair.move_for_degrees(motor_pair.PAIR_1, 0, -300)
-    motor.run_for_degrees(port.C, -180, -600)
-    motor_pair.move_for_degrees(motor_pair.PAIR_1, 0, 300)
-    motor.run_for_degrees(port.C, 180, 600)
-    motor_pair.move_for_degrees(motor_pair.PAIR_1, 0, -300)
-    motor.run_for_degrees(port.C, -180, -600)
-    motor_pair.move_for_degrees(motor_pair.PAIR_1, 0, 300)
-    motor.run_for_degrees(port.C, 180, 600)
-    motor_pair.move_for_degrees(motor_pair.PAIR_1, 0, -300)
-    motor.run_for_degrees(port.C, -180, -600)
-    motor_pair.move_for_degrees(motor_pair.PAIR_1, 0, 300)
-    motor.run_for_degrees(port.C, 180, 600)
-    motor_pair.move_for_degrees(motor_pair.PAIR_1, 0, -600)
-    motor.run_for_degrees(port.C, -180, -600)
+    for i in range(6):
+        motor.run_for_degrees(port.C, 190, 600)
+        motor_pair.move_for_degrees(motor_pair.PAIR_1, 0, -166)
+        motor.run_for_degrees(port.C, -190, -600)
+        motor_pair.move_for_degrees(motor_pair.PAIR_1, 0, 166)
+
+    motor_pair.move_for_degrees(motor_pair.PAIR_1, 0, -833)
+
+
+def WillemDafoe_main():
+    pass
+
+
+def Feetpics_main():
+    pass
 
 
 if __name__ == "__main__":
-    Stasia_main()
+    Stonks_main()
