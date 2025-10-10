@@ -89,7 +89,7 @@ def get_reflected_light(p, default=50):
 # ---------------- My Blocks (custom procedures) ----------------
 
 
-def line_follow_speed_gain_target_lineside_port(
+def line_follow(
     speed, gain, target=50, lineside=1, color_port=port.C, distance=None, condition=None
 ):
     """
@@ -136,7 +136,7 @@ def line_follow_speed_gain_target_lineside_port(
         utime.sleep_ms(10)
 
 
-def gyro_turn_steering_heading_speed(steering, heading, speed):
+def gyro_turn(steering, heading, speed):
     """
     Gyro Turn - run with steering until yaw reaches heading (wrap-aware),
     using motor_pair.move(...) API from the lessons.
@@ -153,9 +153,7 @@ def gyro_turn_steering_heading_speed(steering, heading, speed):
     motor_pair.stop(PAIR_ID)
 
 
-def gyro_follow_heading_gain_speed_distance_condition(
-    heading, gain, speed, distance, condition=None
-):
+def gyro_follow(heading, gain, speed, distance, condition=None):
     """
     Gyro Follow - keep heading using proportional steering until distance
     reached or condition True.
@@ -203,28 +201,28 @@ def gyro_follow_heading_gain_speed_distance_condition(
 # ---------------- main ----------------
 
 
-def Tara_main():
+def Taretare_Sauce_main():
     GAIN = 1.3
     print("yo yo yo")
     motor_pair.pair(PAIR_ID, LEFT, RIGHT)
     motion_sensor.reset_yaw(0)
     utime.sleep_ms(500)
 
-    gyro_follow_heading_gain_speed_distance_condition(
+    gyro_follow(
         heading=0,
         gain=GAIN,
         speed=600,
         distance=1525,
     )
 
-    gyro_follow_heading_gain_speed_distance_condition(
+    gyro_follow(
         heading=0,
         gain=-GAIN,
         speed=-475,
         distance=-40,
     )
 
-    gyro_turn_steering_heading_speed(
+    gyro_turn(
         steering=-100,
         heading=-75,
         speed=200,
@@ -232,36 +230,35 @@ def Tara_main():
 
     utime.sleep_ms(100)
 
-    gyro_follow_heading_gain_speed_distance_condition(
+    gyro_follow(
         heading=-80,
         gain=GAIN,
         speed=400,
-        distance=450,
+        distance=395,
     )
 
     utime.sleep_ms(100)
 
-    gyro_follow_heading_gain_speed_distance_condition(
-        heading=-110,
-        gain=-GAIN,
+    gyro_turn(
+        steering=100,
+        heading=-105,
         speed=-300,
-        distance=-25,
     )
 
     motor.reset_relative_position(port.D, 0)
-    motor.run_to_relative_position(port.D, -160, 150)
+    motor.run_to_relative_position(port.D, 90, 150)
     utime.sleep_ms(1000)
-    motor.run_to_relative_position(port.D, 0, -300)
+    motor.run_to_relative_position(port.D, -90, -300)
     utime.sleep_ms(500)
 
-    gyro_follow_heading_gain_speed_distance_condition(
+    gyro_follow(
         heading=-80,
         gain=-GAIN,
         speed=-300,
         distance=-400,
     )
 
-    gyro_turn_steering_heading_speed(
+    gyro_turn(
         steering=100,
         heading=-45,
         speed=300,
@@ -269,14 +266,14 @@ def Tara_main():
 
     utime.sleep_ms(100)
 
-    gyro_follow_heading_gain_speed_distance_condition(
+    gyro_follow(
         heading=45,
         gain=GAIN,
         speed=300,
         distance=100,
     )
 
-    gyro_turn_steering_heading_speed(
+    gyro_turn(
         steering=100,
         heading=90,
         speed=300,
@@ -298,7 +295,7 @@ def Tara_main():
     #     distance=-100,
     # )
 
-    gyro_follow_heading_gain_speed_distance_condition(
+    gyro_follow(
         heading=90,
         gain=GAIN,
         speed=500,
@@ -321,7 +318,7 @@ def Zaza_main():
     motion_sensor.reset_yaw(0)
     utime.sleep_ms(500)
 
-    gyro_follow_heading_gain_speed_distance_condition(
+    gyro_follow(
         heading=0,
         gain=GAIN,
         speed=600,
@@ -337,66 +334,66 @@ def Anneuryysm_main():
     motor_pair.pair(PAIR_ID, LEFT, RIGHT)
     motion_sensor.reset_yaw(0)
     utime.sleep_ms(100)
-    gyro_follow_heading_gain_speed_distance_condition(
+    gyro_follow(
         heading=0,
         gain=GAIN,
         speed=600,
         distance=1000,
     )
 
-    gyro_turn_steering_heading_speed(
+    gyro_turn(
         steering=100,
         heading=120,
         speed=200,
     )
 
-    gyro_follow_heading_gain_speed_distance_condition(
+    gyro_follow(
         heading=120,
         gain=GAIN,
         speed=600,
         distance=400,
     )
 
-    gyro_follow_heading_gain_speed_distance_condition(
+    gyro_follow(
         heading=120,
         gain=-GAIN,
         speed=-600,
         distance=-200,
     )
 
-    gyro_turn_steering_heading_speed(
+    gyro_turn(
         steering=100,
         heading=180,
         speed=200,
     )
 
-    gyro_follow_heading_gain_speed_distance_condition(
+    gyro_follow(
         heading=180,
         gain=GAIN,
         speed=600,
         distance=400,
     )
 
-    gyro_turn_steering_heading_speed(
+    gyro_turn(
         steering=-100,
         heading=90,
         speed=200,
     )
 
-    gyro_follow_heading_gain_speed_distance_condition(
+    gyro_follow(
         heading=90,
         gain=GAIN,
         speed=600,
         distance=550,
     )
 
-    gyro_turn_steering_heading_speed(
+    gyro_turn(
         steering=-100,
         heading=0,
         speed=200,
     )
 
-    gyro_follow_heading_gain_speed_distance_condition(
+    gyro_follow(
         heading=0,
         gain=GAIN,
         speed=600,
@@ -407,7 +404,7 @@ def Anneuryysm_main():
     motor.run_to_relative_position(port.D, -45, 300)
     utime.sleep_ms(100)
 
-    gyro_follow_heading_gain_speed_distance_condition(
+    gyro_follow(
         heading=0,
         gain=-GAIN,
         speed=-600,
@@ -433,7 +430,73 @@ def Stonks_main():
 
 
 def WillemDafoe_main():
-    pass
+    GAIN = 0.5
+    print("yo yo yo")
+    motor_pair.pair(PAIR_ID, LEFT, RIGHT)
+    motion_sensor.reset_yaw(0)
+    motor.reset_relative_position(port.D, 0)
+    utime.sleep_ms(100)
+
+    gyro_follow(
+        heading=0,
+        gain=GAIN,
+        speed=400,
+        distance=1000,
+    )
+
+    gyro_turn(
+        steering=100,
+        heading=6,
+        speed=200,
+    )
+
+    gyro_follow(
+        heading=6,
+        gain=GAIN,
+        speed=300,
+        distance=335,
+    )
+
+    gyro_follow(
+        heading=4,
+        gain=-GAIN,
+        speed=-200,
+        distance=-100,
+    )
+
+    gyro_follow(
+        heading=0,
+        gain=-GAIN,
+        speed=-200,
+        distance=-200,
+    )
+
+    gyro_follow(
+        heading=0,
+        gain=GAIN,
+        speed=200,
+        distance=100,
+    )
+
+    gyro_turn(
+        steering=-100,
+        heading=-10,
+        speed=100,
+    )
+
+    motor.run_for_degrees(port.D, -250, 200)
+    utime.sleep_ms(500)
+
+    gyro_follow(
+        heading=0,
+        gain=-GAIN,
+        speed=-300,
+        distance=0,
+        condition=lambda: (color_sensor.color(port.E)) == color.BLUE,
+    )
+
+    motor.run_for_degrees(port.D, 300, 200)
+    utime.sleep_ms(1000)
 
 
 def Feetpics_main():
@@ -441,4 +504,4 @@ def Feetpics_main():
 
 
 if __name__ == "__main__":
-    Stonks_main()
+    WillemDafoe_main()
