@@ -418,5 +418,35 @@ def Annie_main():
     utime.sleep_ms(100)
 
 
+def Stasia_main():
+    motor.reset_relative_position(port.C, 0)
+    motor.reset_relative_position(port.D, 0)
+
+    motor_pair.move_for_degrees(motor_pair.PAIR_1, 0, 600)
+    motor.run_for_degrees(port.C, 180, 600)
+    motor_pair.move_for_degrees(motor_pair.PAIR_1, 0, -300)
+    motor.run_for_degrees(port.C, -180, -600)
+    motor_pair.move_for_degrees(motor_pair.PAIR_1, 0, 300)
+    motor.run_for_degrees(port.C, 180, 600)
+    motor_pair.move_for_degrees(motor_pair.PAIR_1, 0, -300)
+    motor.run_for_degrees(port.C, -180, -600)
+    motor_pair.move_for_degrees(motor_pair.PAIR_1, 0, 300)
+    motor.run_for_degrees(port.C, 180, 600)
+    motor_pair.move_for_degrees(motor_pair.PAIR_1, 0, -300)
+    motor.run_for_degrees(port.C, -180, -600)
+    motor_pair.move_for_degrees(motor_pair.PAIR_1, 0, 300)
+    motor.run_for_degrees(port.C, 180, 600)
+    motor_pair.move_for_degrees(motor_pair.PAIR_1, 0, -300)
+    motor.run_for_degrees(port.C, -180, -600)
+    motor_pair.move_for_degrees(motor_pair.PAIR_1, 0, 300)
+    motor.run_for_degrees(port.C, 180, 600)
+    motor_pair.move_for_degrees(motor_pair.PAIR_1, 0, -300)
+    motor.run_for_degrees(port.C, -180, -600)
+    motor_pair.move_for_degrees(motor_pair.PAIR_1, 0, 300)
+    motor.run_for_degrees(port.C, 180, 600)
+    motor_pair.move_for_degrees(motor_pair.PAIR_1, 0, -600)
+    motor.run_for_degrees(port.C, -180, -600)
+
+
 if __name__ == "__main__":
-    Tara_main()
+    Stasia_main()
