@@ -1,5 +1,4 @@
 # LEGO slot:1 autostart
-
 import color
 import color_sensor
 import force_sensor
@@ -38,7 +37,7 @@ def clamp(v, lo, hi):
 
 
 def normalize_angle(a):
-    """Normalize to (-180, 180]."""
+    """Normalize to (-180, 180)."""
     a = float(a)
     while a <= -180.0:
         a += 360.0
@@ -62,6 +61,10 @@ def shortest_error(target, current):
 
 # ---------------- motor/encoder wrappers ----------------
 
+COLLISION_SENSOR = port.E
+COLOUR_SENSOR = port.C
+LEFT_ACTUATOR = port.
+RIGHT_ACTUATOR = port.
 LEFT = port.A
 RIGHT = port.B
 PAIR_ID = motor_pair.PAIR_1
@@ -138,13 +141,16 @@ def line_follow(
 
 def gyro_turn(steering, heading, speed):
     """
-    Gyro Turn - run with steering until yaw reaches heading (wrap-aware),
-    using motor_pair.move(...) API from the lessons.
+    steering (-100 to 100),
+    heading (180 to -180),
+    speed (deg/sec),
+    \nGyro Turn - run with steering until yaw reaches heading (wrap-aware),
+    using motor_pair.move
     """
 
     target_v = normalize_angle(heading)
 
-    motor_pair.move(PAIR_ID, steering, velocity=speed)
+    motor_pair.move(PAIR_ID, steering, velocity=pct_to_dps(speed))
 
     # TOL of 1 degree
     TOL = 1.0
@@ -155,7 +161,12 @@ def gyro_turn(steering, heading, speed):
 
 def gyro_follow(heading, gain, speed, distance, condition=None):
     """
-    Gyro Follow - keep heading using proportional steering until distance
+    heading (180 to -180),
+    gain (Adjusted for each Robot),
+    speed (deg/sec),
+    distance (Wheel degrees),
+    condition (End Condition)
+    \nGyro Follow - keep heading using proportional steering until distance
     reached or condition True.
     Uses motor_pair.move(...) with proportional steering; distance checked
     on RIGHT motor degrees.
@@ -175,7 +186,7 @@ def gyro_follow(heading, gain, speed, distance, condition=None):
         n_Error = shortest_error(n_TargetHeading, n_CurrentHeading) * gain
 
         steering_cmd = int(clamp(n_Error, -100, 100))
-        motor_pair.move(PAIR_ID, steering_cmd, velocity=speed)
+        motor_pair.move(PAIR_ID, steering_cmd, velocity=pct_to_dps(speed))
 
         # Exit conditions
         done = False
@@ -211,21 +222,21 @@ def Taretare_Sauce_main():
     gyro_follow(
         heading=0,
         gain=GAIN,
-        speed=600,
+        speed=54.5454545455,
         distance=1525,
     )
 
     gyro_follow(
         heading=0,
         gain=-GAIN,
-        speed=-475,
+        speed=-43.1818181818,
         distance=-40,
     )
 
     gyro_turn(
         steering=-100,
         heading=-75,
-        speed=200,
+        speed=18.1818181818,
     )
 
     utime.sleep_ms(100)
@@ -233,7 +244,7 @@ def Taretare_Sauce_main():
     gyro_follow(
         heading=-80,
         gain=GAIN,
-        speed=400,
+        speed=36.3636363636,
         distance=395,
     )
 
@@ -242,7 +253,7 @@ def Taretare_Sauce_main():
     gyro_turn(
         steering=100,
         heading=-105,
-        speed=-300,
+        speed=-27.2727272727,
     )
 
     motor.reset_relative_position(port.D, 0)
@@ -254,14 +265,14 @@ def Taretare_Sauce_main():
     gyro_follow(
         heading=-80,
         gain=-GAIN,
-        speed=-300,
+        speed=-27.2727272727,
         distance=-400,
     )
 
     gyro_turn(
         steering=100,
         heading=-45,
-        speed=300,
+        speed=27.2727272727,
     )
 
     utime.sleep_ms(100)
@@ -269,37 +280,23 @@ def Taretare_Sauce_main():
     gyro_follow(
         heading=45,
         gain=GAIN,
-        speed=300,
+        speed=27.2727272727,
         distance=100,
     )
 
     gyro_turn(
         steering=100,
         heading=90,
-        speed=300,
+        speed=27.2727272727,
     )
 
     utime.sleep_ms(100)
-
-    # gyro_follow_heading_gain_speed_distance_condition(
-    #     heading=90,
-    #     gain=GAIN,
-    #     speed=300,
-    #     distance=100,
-    # )
-
-    # gyro_follow_heading_gain_speed_distance_condition(
-    #     heading=80,
-    #     gain=-GAIN,
-    #     speed=-300,
-    #     distance=-100,
-    # )
 
     gyro_follow(
         heading=90,
         gain=GAIN,
         speed=500,
-        distance=800,
+        distance=45.4545454545,
     )
 
     motor.reset_relative_position(port.C, 0)
@@ -321,7 +318,7 @@ def Zaza_main():
     gyro_follow(
         heading=0,
         gain=GAIN,
-        speed=600,
+        speed=54.5454545455,
         distance=1525,
         condition=lambda: color_sensor.color(port.E) == color.RED,
     )
@@ -337,66 +334,66 @@ def Anneuryysm_main():
     gyro_follow(
         heading=0,
         gain=GAIN,
-        speed=600,
+        speed=54.5454545455,
         distance=1000,
     )
 
     gyro_turn(
         steering=100,
         heading=120,
-        speed=200,
+        speed=18.1818181818,
     )
 
     gyro_follow(
         heading=120,
         gain=GAIN,
-        speed=600,
+        speed=54.5454545455,
         distance=400,
     )
 
     gyro_follow(
         heading=120,
         gain=-GAIN,
-        speed=-600,
+        speed=-54.5454545455,
         distance=-200,
     )
 
     gyro_turn(
         steering=100,
         heading=180,
-        speed=200,
+        speed=18.1818181818,
     )
 
     gyro_follow(
         heading=180,
         gain=GAIN,
-        speed=600,
+        speed=54.5454545455,
         distance=400,
     )
 
     gyro_turn(
         steering=-100,
         heading=90,
-        speed=200,
+        speed=18.1818181818,
     )
 
     gyro_follow(
         heading=90,
         gain=GAIN,
-        speed=600,
+        speed=54.5454545455,
         distance=550,
     )
 
     gyro_turn(
         steering=-100,
         heading=0,
-        speed=200,
+        speed=18.1818181818,
     )
 
     gyro_follow(
         heading=0,
         gain=GAIN,
-        speed=600,
+        speed=54.5454545455,
         distance=50,
     )
 
@@ -407,7 +404,7 @@ def Anneuryysm_main():
     gyro_follow(
         heading=0,
         gain=-GAIN,
-        speed=-600,
+        speed=-54.5454545455,
         distance=-75,
     )
 
@@ -440,48 +437,48 @@ def WillemDafoe_main():
     gyro_follow(
         heading=0,
         gain=GAIN,
-        speed=400,
+        speed=36.3636363636,
         distance=1000,
     )
 
     gyro_turn(
         steering=100,
         heading=6,
-        speed=200,
+        speed=18.1818181818,
     )
 
     gyro_follow(
         heading=6,
         gain=GAIN,
-        speed=300,
+        speed=27.2727272727,
         distance=335,
     )
 
     gyro_follow(
         heading=4,
         gain=-GAIN,
-        speed=-200,
+        speed=-18.1818181818,
         distance=-100,
     )
 
     gyro_follow(
         heading=0,
         gain=-GAIN,
-        speed=-200,
+        speed=-18.1818181818,
         distance=-200,
     )
 
     gyro_follow(
         heading=0,
         gain=GAIN,
-        speed=200,
+        speed=18.1818181818,
         distance=100,
     )
 
     gyro_turn(
         steering=-100,
         heading=-10,
-        speed=100,
+        speed=9.09090909091,
     )
 
     motor.run_for_degrees(port.D, -250, 200)
@@ -490,7 +487,7 @@ def WillemDafoe_main():
     gyro_follow(
         heading=0,
         gain=-GAIN,
-        speed=-300,
+        speed=-27.2727272727,
         distance=0,
         condition=lambda: (color_sensor.color(port.E)) == color.BLUE,
     )
