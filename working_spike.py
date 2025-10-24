@@ -62,9 +62,9 @@ def shortest_error(target, current):
 # ---------------- motor/encoder wrappers ----------------
 
 COLLISION_SENSOR = port.E
-COLOUR_SENSOR = port.C
-LEFT_ACTUATOR = port.
-RIGHT_ACTUATOR = port.
+COLOUR_SENSOR = port.F
+LEFT_ACTUATOR = port.C
+RIGHT_ACTUATOR = port.D
 LEFT = port.A
 RIGHT = port.B
 PAIR_ID = motor_pair.PAIR_1
@@ -222,14 +222,14 @@ def Taretare_Sauce_main():
     gyro_follow(
         heading=0,
         gain=GAIN,
-        speed=54.5454545455,
+        speed=55,
         distance=1525,
     )
 
     gyro_follow(
         heading=0,
         gain=-GAIN,
-        speed=-43.1818181818,
+        speed=-43,
         distance=-40,
     )
 
@@ -244,7 +244,7 @@ def Taretare_Sauce_main():
     gyro_follow(
         heading=-80,
         gain=GAIN,
-        speed=36.3636363636,
+        speed=36,
         distance=395,
     )
 
@@ -253,26 +253,26 @@ def Taretare_Sauce_main():
     gyro_turn(
         steering=100,
         heading=-105,
-        speed=-27.2727272727,
+        speed=-27,
     )
 
     motor.reset_relative_position(port.D, 0)
-    motor.run_to_relative_position(port.D, 90, 150)
+    motor.run_for_degrees(port.D, 720, 1100)
     utime.sleep_ms(1000)
-    motor.run_to_relative_position(port.D, -90, -300)
-    utime.sleep_ms(500)
+    motor.run_for_degrees(port.D, -720, 1100)
+    utime.sleep_ms(1000)
 
     gyro_follow(
         heading=-80,
         gain=-GAIN,
-        speed=-27.2727272727,
+        speed=-27,
         distance=-400,
     )
 
     gyro_turn(
         steering=100,
         heading=-45,
-        speed=27.2727272727,
+        speed=27,
     )
 
     utime.sleep_ms(100)
@@ -280,14 +280,14 @@ def Taretare_Sauce_main():
     gyro_follow(
         heading=45,
         gain=GAIN,
-        speed=27.2727272727,
+        speed=27,
         distance=100,
     )
 
     gyro_turn(
         steering=100,
         heading=90,
-        speed=27.2727272727,
+        speed=27,
     )
 
     utime.sleep_ms(100)
@@ -296,14 +296,14 @@ def Taretare_Sauce_main():
         heading=90,
         gain=GAIN,
         speed=500,
-        distance=45.4545454545,
+        distance=45,
     )
 
     motor.reset_relative_position(port.C, 0)
-    motor.run_to_relative_position(port.C, 160, 200)
+    motor.run_for_degrees(port.C, 1280, 200)
     utime.sleep_ms(1000)
-    motor.run_to_relative_position(port.C, 0, -300)
-    utime.sleep_ms(500)
+    motor.run_for_degrees(port.C, -1280, -300)
+    utime.sleep_ms(1000)
 
     print("done")
 
@@ -334,66 +334,66 @@ def Anneuryysm_main():
     gyro_follow(
         heading=0,
         gain=GAIN,
-        speed=54.5454545455,
+        speed=55,
         distance=1000,
     )
 
     gyro_turn(
         steering=100,
         heading=120,
-        speed=18.1818181818,
+        speed=18,
     )
 
     gyro_follow(
         heading=120,
         gain=GAIN,
-        speed=54.5454545455,
+        speed=55,
         distance=400,
     )
 
     gyro_follow(
         heading=120,
         gain=-GAIN,
-        speed=-54.5454545455,
+        speed=-55,
         distance=-200,
     )
 
     gyro_turn(
         steering=100,
         heading=180,
-        speed=18.1818181818,
+        speed=18,
     )
 
     gyro_follow(
         heading=180,
         gain=GAIN,
-        speed=54.5454545455,
+        speed=55,
         distance=400,
     )
 
     gyro_turn(
         steering=-100,
         heading=90,
-        speed=18.1818181818,
+        speed=18,
     )
 
     gyro_follow(
         heading=90,
         gain=GAIN,
-        speed=54.5454545455,
+        speed=55,
         distance=550,
     )
 
     gyro_turn(
         steering=-100,
         heading=0,
-        speed=18.1818181818,
+        speed=18,
     )
 
     gyro_follow(
         heading=0,
         gain=GAIN,
-        speed=54.5454545455,
+        speed=55,
         distance=50,
     )
 
@@ -404,7 +404,7 @@ def Anneuryysm_main():
     gyro_follow(
         heading=0,
         gain=-GAIN,
-        speed=-54.5454545455,
+        speed=-55,
         distance=-75,
     )
 
@@ -501,4 +501,4 @@ def Feetpics_main():
 
 
 if __name__ == "__main__":
-    WillemDafoe_main()
+    Taretare_Sauce_main()
