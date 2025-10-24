@@ -213,7 +213,7 @@ def gyro_follow(heading, gain, speed, distance, condition=None):
 
 
 def Taretare_Sauce_main():
-    GAIN = 1.3
+    GAIN = 0.2
     print("yo yo yo")
     motor_pair.pair(PAIR_ID, LEFT, RIGHT)
     motion_sensor.reset_yaw(0)
@@ -309,7 +309,7 @@ def Taretare_Sauce_main():
 
 
 def Zaza_main():
-    GAIN = 2
+    GAIN = 0.2
     print("yo yo yo")
     motor_pair.pair(PAIR_ID, LEFT, RIGHT)
     motion_sensor.reset_yaw(0)
@@ -325,7 +325,7 @@ def Zaza_main():
 
 
 def Anneuryysm_main():
-    GAIN = 1.5
+    GAIN = 0.2
     motor.reset_relative_position(port.D, 0)
     print("yo yo yo")
     motor_pair.pair(PAIR_ID, LEFT, RIGHT)
@@ -427,69 +427,71 @@ def Stonks_main():
 
 
 def WillemDafoe_main():
-    GAIN = 0.5
-    print("yo yo yo")
+    GAIN = 0.2
+    print("willy")
     motor_pair.pair(PAIR_ID, LEFT, RIGHT)
     motion_sensor.reset_yaw(0)
-    motor.reset_relative_position(port.D, 0)
+    motor.run_to_absolute_position(LEFT_ACTUATOR, 0, 200)
+    utime.sleep_ms(100)
+    motor.reset_relative_position(LEFT_ACTUATOR, 0)
     utime.sleep_ms(100)
 
     gyro_follow(
         heading=0,
         gain=GAIN,
-        speed=36.3636363636,
+        speed=36,
         distance=1000,
     )
 
     gyro_turn(
-        steering=100,
-        heading=6,
-        speed=18.1818181818,
+        steering=-100,
+        heading=9,
+        speed=18,
     )
 
     gyro_follow(
-        heading=6,
+        heading=9,
         gain=GAIN,
-        speed=27.2727272727,
-        distance=335,
+        speed=27,
+        distance=400,
     )
 
     gyro_follow(
         heading=4,
         gain=-GAIN,
-        speed=-18.1818181818,
+        speed=-18,
         distance=-100,
     )
 
     gyro_follow(
         heading=0,
         gain=-GAIN,
-        speed=-18.1818181818,
+        speed=-18,
         distance=-200,
     )
 
     gyro_follow(
         heading=0,
         gain=GAIN,
-        speed=18.1818181818,
-        distance=100,
+        speed=18,
+        distance=115,
     )
 
     gyro_turn(
-        steering=-100,
+        steering=100,
         heading=-10,
-        speed=9.09090909091,
+        speed=9,
     )
 
-    motor.run_for_degrees(port.D, -250, 200)
+    motor.run_for_degrees(LEFT_ACTUATOR, -250, 200)
     utime.sleep_ms(500)
 
     gyro_follow(
         heading=0,
         gain=-GAIN,
-        speed=-27.2727272727,
+        speed=-27,
         distance=0,
-        condition=lambda: (color_sensor.color(port.E)) == color.BLUE,
+        condition=lambda: (color_sensor.color(port.E)) == color.GREEN,
     )
 
     motor.run_for_degrees(port.D, 300, 200)
@@ -501,4 +503,4 @@ def Feetpics_main():
 
 
 if __name__ == "__main__":
-    Taretare_Sauce_main()
+    WillemDafoe_main()
