@@ -63,13 +63,8 @@ def shortest_error(target, current):
 
 COLLISION_SENSOR = port.E
 COLOUR_SENSOR = port.F
-<<<<<<< HEAD
 LEFT_ACTUATOR = port.D
 RIGHT_ACTUATOR = port.C
-=======
-LEFT_ACTUATOR = port.C
-RIGHT_ACTUATOR = port.D
->>>>>>> 5ce48f49c0367b784ad23e4195100ee774a93704
 LEFT = port.A
 RIGHT = port.B
 PAIR_ID = motor_pair.PAIR_1
@@ -341,7 +336,6 @@ def Anneuryysm_main():
         heading=0,
         gain=GAIN,
         speed=55,
-<<<<<<< HEAD
         distance=500,
     )
 
@@ -349,85 +343,40 @@ def Anneuryysm_main():
         steering=-100,
         heading=15,
         speed=20,
-=======
-        distance=1000,
-    )
-
-    gyro_turn(
-        steering=100,
-        heading=120,
-        speed=18,
->>>>>>> 5ce48f49c0367b784ad23e4195100ee774a93704
     )
     print("yr")
     gyro_follow(
         heading=15,
         gain=GAIN,
         speed=55,
-<<<<<<< HEAD
         distance=600,
-=======
-        distance=400,
->>>>>>> 5ce48f49c0367b784ad23e4195100ee774a93704
     )
 
     gyro_follow(
         heading=120,
         gain=-GAIN,
         speed=-55,
-<<<<<<< HEAD
         distance=-450,
     )
     
-=======
-        distance=-200,
-    )
-
-    gyro_turn(
-        steering=100,
-        heading=180,
-        speed=18,
-    )
-
->>>>>>> 5ce48f49c0367b784ad23e4195100ee774a93704
     gyro_follow(
         heading=180,
         gain=GAIN,
         speed=55,
         distance=400,
     )
-<<<<<<< HEAD
     utime.sleep_ms(500)
     gyro_follow(
         heading=180,
         gain=-GAIN,
         speed=-55,
         distance=-600,
-=======
-
-    gyro_turn(
-        steering=-100,
-        heading=90,
-        speed=18,
-    )
-
-    gyro_follow(
-        heading=90,
-        gain=GAIN,
-        speed=55,
-        distance=550,
->>>>>>> 5ce48f49c0367b784ad23e4195100ee774a93704
     )
     
     gyro_turn(
         steering=-100,
-<<<<<<< HEAD
         heading=90,
         speed=20,
-=======
-        heading=0,
-        speed=18,
->>>>>>> 5ce48f49c0367b784ad23e4195100ee774a93704
     )
     
     utime.sleep_ms(9999999)
@@ -435,13 +384,8 @@ def Anneuryysm_main():
     gyro_follow(
         heading=0,
         gain=GAIN,
-<<<<<<< HEAD
         speed=54.5454545455,
         distance=80,
-=======
-        speed=55,
-        distance=50,
->>>>>>> 5ce48f49c0367b784ad23e4195100ee774a93704
     )
 
     utime.sleep_ms(300)
@@ -521,16 +465,16 @@ def WillemDafoe_main():
         heading=0,
         gain=GAIN,
         speed=18,
-        distance=115,
+        distance=140,
     )
 
     gyro_turn(
         steering=100,
         heading=-10,
-        speed=9,
+        speed=4,
     )
 
-    motor.run_for_degrees(LEFT_ACTUATOR, -250, 200)
+    motor.run_for_degrees(RIGHT_ACTUATOR, -250, 200)
     utime.sleep_ms(500)
 
     gyro_follow(
@@ -550,4 +494,5 @@ def Feetpics_main():
 
 
 if __name__ == "__main__":
-    Anneuryysm_main()
+    WillemDafoe_main()
+    
