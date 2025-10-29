@@ -63,13 +63,8 @@ def shortest_error(target, current):
 
 COLLISION_SENSOR = port.E
 COLOUR_SENSOR = port.F
-<<<<<<< HEAD
 LEFT_ACTUATOR = port.D
 RIGHT_ACTUATOR = port.C
-=======
-LEFT_ACTUATOR = port.C
-RIGHT_ACTUATOR = port.D
->>>>>>> 5ce48f49c0367b784ad23e4195100ee774a93704
 LEFT = port.A
 RIGHT = port.B
 PAIR_ID = motor_pair.PAIR_1
@@ -146,8 +141,8 @@ def line_follow(
 
 def gyro_turn(steering, heading, speed):
     """
-    steering (-100 to 100),
-    heading (180 to -180),
+    steering (Left -100 to Right 100),
+    heading (Left 180 to Right -180),
     speed (deg/sec),
     \nGyro Turn - run with steering until yaw reaches heading (wrap-aware),
     using motor_pair.move
@@ -166,7 +161,7 @@ def gyro_turn(steering, heading, speed):
 
 def gyro_follow(heading, gain, speed, distance, condition=None):
     """
-    heading (180 to -180),
+    heading (Left 180 to Right -180),
     gain (Adjusted for each Robot),
     speed (deg/sec),
     distance (Wheel degrees),
@@ -228,89 +223,88 @@ def Taretare_Sauce_main():
         heading=0,
         gain=GAIN,
         speed=55,
-        distance=1525,
+        distance=1400,
+    )
+
+    gyro_turn(
+        steering=-100,
+        heading=45,
+        speed=18,
+    )
+
+    gyro_follow(
+        heading=45,
+        gain=-GAIN,
+        speed=-36,
+        distance=-35,
+    )
+
+    motor.reset_relative_position(port.D, 0)
+    utime.sleep_ms(100)
+    motor.run_for_degrees(port.D, 1500, 1100)
+    utime.sleep_ms(1000)
+    motor.run_for_degrees(port.D, -800, 1100)
+    utime.sleep_ms(1000)
+
+    gyro_follow(
+        heading=30,
+        gain=GAIN,
+        speed=36,
+        distance=100,
+    )
+
+    utime.sleep_ms(1000)
+
+    gyro_turn(
+        steering=-100,
+        heading=0,
+        speed=-27,
     )
 
     gyro_follow(
         heading=0,
         gain=-GAIN,
-        speed=-43,
-        distance=-40,
-    )
-
-    gyro_turn(
-        steering=-100,
-        heading=-75,
-        speed=18.1818181818,
-    )
-
-    utime.sleep_ms(100)
-
-    gyro_follow(
-        heading=-80,
-        gain=GAIN,
-        speed=36,
-        distance=395,
-    )
-
-    utime.sleep_ms(100)
-
-    gyro_turn(
-        steering=100,
-        heading=-105,
         speed=-27,
-    )
-
-    motor.reset_relative_position(port.D, 0)
-    motor.run_for_degrees(port.D, 720, 1100)
-    utime.sleep_ms(1000)
-    motor.run_for_degrees(port.D, -720, 1100)
-    utime.sleep_ms(1000)
-
-    gyro_follow(
-        heading=-80,
-        gain=-GAIN,
-        speed=-27,
-        distance=-400,
+        distance=-200,
     )
 
     gyro_turn(
         steering=100,
-        heading=-45,
+        heading=-90,
         speed=27,
     )
 
-    utime.sleep_ms(100)
+    # utime.sleep_ms(100)
 
-    gyro_follow(
-        heading=45,
-        gain=GAIN,
-        speed=27,
-        distance=100,
-    )
+    # gyro_follow(
+    #     heading=45,
+    #     gain=GAIN,
+    #     speed=27,
+    #     distance=100,
+    # )
 
-    gyro_turn(
-        steering=100,
-        heading=90,
-        speed=27,
-    )
+    # gyro_turn(
+    #     steering=100,
+    #     heading=90,
+    #     speed=27,
+    # )
 
-    utime.sleep_ms(100)
+    # utime.sleep_ms(100)
 
-    gyro_follow(
-        heading=90,
-        gain=GAIN,
-        speed=500,
-        distance=45,
-    )
+    # gyro_follow(
+    #     heading=90,
+    #     gain=GAIN,
+    #     speed=500,
+    #     distance=45,
+    # )
 
-    motor.reset_relative_position(port.C, 0)
-    motor.run_for_degrees(port.C, 1280, 200)
-    utime.sleep_ms(1000)
-    motor.run_for_degrees(port.C, -1280, -300)
-    utime.sleep_ms(1000)
+    # motor.reset_relative_position(port.C, 0)
+    # motor.run_for_degrees(port.C, 1280, 200)
+    # utime.sleep_ms(1000)
+    # motor.run_for_degrees(port.C, -1280, -300)
+    # utime.sleep_ms(1000)
 
-    print("done")
+    # print("done")
 
 
 def Zaza_main():
@@ -336,12 +330,11 @@ def Anneuryysm_main():
     motor_pair.pair(PAIR_ID, LEFT, RIGHT)
     motion_sensor.reset_yaw(0)
     utime.sleep_ms(100)
-    
+
     gyro_follow(
         heading=0,
         gain=GAIN,
         speed=55,
-<<<<<<< HEAD
         distance=500,
     )
 
@@ -349,99 +342,49 @@ def Anneuryysm_main():
         steering=-100,
         heading=15,
         speed=20,
-=======
-        distance=1000,
-    )
-
-    gyro_turn(
-        steering=100,
-        heading=120,
-        speed=18,
->>>>>>> 5ce48f49c0367b784ad23e4195100ee774a93704
     )
     print("yr")
     gyro_follow(
         heading=15,
         gain=GAIN,
         speed=55,
-<<<<<<< HEAD
         distance=600,
-=======
-        distance=400,
->>>>>>> 5ce48f49c0367b784ad23e4195100ee774a93704
     )
 
     gyro_follow(
         heading=120,
         gain=-GAIN,
         speed=-55,
-<<<<<<< HEAD
         distance=-450,
     )
-    
-=======
-        distance=-200,
-    )
 
-    gyro_turn(
-        steering=100,
-        heading=180,
-        speed=18,
-    )
-
->>>>>>> 5ce48f49c0367b784ad23e4195100ee774a93704
     gyro_follow(
         heading=180,
         gain=GAIN,
         speed=55,
         distance=400,
     )
-<<<<<<< HEAD
     utime.sleep_ms(500)
     gyro_follow(
         heading=180,
         gain=-GAIN,
         speed=-55,
         distance=-600,
-=======
+    )
 
     gyro_turn(
         steering=-100,
-        heading=90,
-        speed=18,
-    )
-
-    gyro_follow(
-        heading=90,
-        gain=GAIN,
-        speed=55,
-        distance=550,
->>>>>>> 5ce48f49c0367b784ad23e4195100ee774a93704
-    )
-    
-    gyro_turn(
-        steering=-100,
-<<<<<<< HEAD
         heading=90,
         speed=20,
-=======
-        heading=0,
-        speed=18,
->>>>>>> 5ce48f49c0367b784ad23e4195100ee774a93704
     )
-    
+
     utime.sleep_ms(9999999)
-    
+
     gyro_follow(
         heading=0,
         gain=GAIN,
-<<<<<<< HEAD
         speed=54.5454545455,
         distance=80,
-=======
-        speed=55,
-        distance=50,
->>>>>>> 5ce48f49c0367b784ad23e4195100ee774a93704
     )
 
     utime.sleep_ms(300)
@@ -550,4 +493,4 @@ def Feetpics_main():
 
 
 if __name__ == "__main__":
-    Anneuryysm_main()
+    Taretare_Sauce_main()
