@@ -212,7 +212,7 @@ def gyro_follow(heading, gain, speed, distance, condition=None):
 # ---------------- main ----------------
 
 
-def Taretare_Sauce_main():
+def Taretare_Sauce_1_main():
     GAIN = 0.2
     print("yo yo yo")
     motor_pair.pair(PAIR_ID, LEFT, RIGHT)
@@ -307,7 +307,7 @@ def Taretare_Sauce_main():
     # print("done")
 
 
-def Zaza_main():
+def Zaza_5_main():
     GAIN = 0.2
     print("yo yo yo")
     motor_pair.pair(PAIR_ID, LEFT, RIGHT)
@@ -323,7 +323,7 @@ def Zaza_main():
     )
 
 
-def Anneuryysm_main():
+def Anneuryysm_3_main():
     GAIN = 0.2
     motor.reset_relative_position(port.D, 0)
     print("yo yo yo")
@@ -402,7 +402,7 @@ def Anneuryysm_main():
     utime.sleep_ms(100)
 
 
-def Stonks_main():
+def Stonks_2_main():
     motor.reset_relative_position(port.C, 0)
     motor.reset_relative_position(port.D, 0)
     motor_pair.move_for_degrees(motor_pair.PAIR_1, 0, 833)
@@ -416,7 +416,7 @@ def Stonks_main():
     motor_pair.move_for_degrees(motor_pair.PAIR_1, 0, -833)
 
 
-def WillemDafoe_main():
+def WillemDafoe_4_main():
     GAIN = 0.2
     print("willy")
     motor_pair.pair(PAIR_ID, LEFT, RIGHT)
@@ -488,9 +488,9 @@ def WillemDafoe_main():
     utime.sleep_ms(1000)
 
 
-def Feetpics_main():
+def Feetpics_6_main():
     pass
 
 
 if __name__ == "__main__":
-    Taretare_Sauce_main()
+    Taretare_Sauce_1_main()
