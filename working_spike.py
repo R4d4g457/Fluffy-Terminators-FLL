@@ -61,8 +61,8 @@ def shortest_error(target, current):
 
 # ---------------- motor/encoder wrappers ----------------
 
-COLLISION_SENSOR = port.E
-COLOUR_SENSOR = port.F
+COLLISION_SENSOR = port.F
+COLOUR_SENSOR = port.E
 LEFT_ACTUATOR = port.D
 RIGHT_ACTUATOR = port.C
 LEFT = port.A
@@ -309,19 +309,52 @@ def Taretare_Sauce_1_main():
 
 def Zaza_5_main():
     GAIN = 0.2
+    motor.reset_relative_position(port.D, 0)
     print("yo yo yo")
     motor_pair.pair(PAIR_ID, LEFT, RIGHT)
     motion_sensor.reset_yaw(0)
     utime.sleep_ms(500)
-
+    
+    
     gyro_follow(
         heading=0,
         gain=GAIN,
-        speed=54.5454545455,
-        distance=1525,
-        condition=lambda: color_sensor.color(port.E) == color.RED,
+        speed=55,
+        distance=800,
     )
-
+    
+    gyro_follow(
+        heading=0,
+        gain=GAIN,
+        speed=-20,
+        distance=150
+    )
+    
+    gyro_turn(
+        steering=-100,
+        heading=45,
+        speed=30
+    )
+    
+    gyro_follow(
+        heading=45,
+        gain=GAIN,
+        speed=40,
+        distance=500
+    )
+    
+    gyro_turn(
+        steering=100,
+        heading=10,
+        speed=30
+    )
+    
+    motor_pair.move(PAIR_ID,0,velocity=pct_to_dps(40))
+    wait_until(lambda: color_sensor.color(COLOUR_SENSOR) == color.WHITE)
+    wait_until(lambda: color_sensor.color(COLOUR_SENSOR) == color.BLACK)
+    motor_pair.stop(PAIR_ID)
+     
+    
 
 def Anneuryysm_3_main():
     GAIN = 0.2
@@ -493,4 +526,4 @@ def Feetpics_6_main():
 
 
 if __name__ == "__main__":
-    Taretare_Sauce_1_main()
+    Zaza_5_main()
