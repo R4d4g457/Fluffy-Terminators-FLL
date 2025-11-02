@@ -60,7 +60,7 @@ def shortest_error(target, current):
 
 
 def shortest_steering(steering, heading):
-    if heading < motion_sensor.get_yaw:
+    if heading < yaw_deg():
         steering *= -1
     return steering
 
@@ -150,12 +150,10 @@ def gyro_turn(steering, heading, speed):
     steering,
     heading (Left 180 to Right -180),
     speed (deg/sec),
-    \nGyro Turn - run with steering until yaw reaches heading (wrap-aware),
+    Gyro Turn - run with steering until yaw reaches heading (wrap-aware),
     using motor_pair.move
     """
-
     target_v = normalize_angle(heading)
-
     steering = shortest_steering(steering, heading)
 
     motor_pair.move(PAIR_ID, steering, velocity=pct_to_dps(speed))
@@ -526,72 +524,57 @@ def Anneuryysm_3_main():
     gyro_follow(
         heading=0,
         gain=GAIN,
-        speed=55,
-        distance=500,
+        speed=40,
+        distance=620,
     )
 
     gyro_turn(
-        steering=100,
-        heading=15,
-        speed=20,
+        steering=-100,
+        heading=33,
+        speed=12,
     )
-    print("yr")
+
     gyro_follow(
-        heading=15,
+        heading=33,
         gain=GAIN,
-        speed=55,
-        distance=600,
+        speed=40,
+        distance=260,
+    )
+
+    gyro_turn(steering=-100, heading=120, speed=12)
+
+    gyro_follow(
+        heading=120,
+        gain=GAIN,
+        speed=40,
+        distance=300,
     )
 
     gyro_follow(
         heading=120,
         gain=-GAIN,
         speed=-55,
-        distance=-450,
-    )
-
-    gyro_follow(
-        heading=180,
-        gain=GAIN,
-        speed=55,
-        distance=400,
-    )
-    utime.sleep_ms(500)
-    gyro_follow(
-        heading=180,
-        gain=-GAIN,
-        speed=-55,
-        distance=-600,
+        distance=-250,
     )
 
     gyro_turn(
-        steering=100,
-        heading=90,
+        steering=-100,
+        heading=45,
         speed=20,
     )
 
-    utime.sleep_ms(9999999)
-
     gyro_follow(
-        heading=0,
+        heading=45,
         gain=GAIN,
-        speed=54.5454545455,
-        distance=80,
+        speed=55,
+        distance=650,
     )
 
-    utime.sleep_ms(300)
-    motor.run_for_degrees(port.D, -60, 300)
-    utime.sleep_ms(100)
-
-    gyro_follow(
-        heading=0,
-        gain=-GAIN,
-        speed=-55,
-        distance=-75,
+    gyro_turn(
+        steering=-100,
+        heading=225,
+        speed=20,
     )
-
-    motor.run_to_relative_position(port.D, -140, 300)
-    utime.sleep_ms(100)
 
 
 def Stonks_2_main():
@@ -692,4 +675,4 @@ def Feetpics_5_main():
 
 
 if __name__ == "__main__":
-    WillemDafoe_4_main()
+    Zaza_6_main()
