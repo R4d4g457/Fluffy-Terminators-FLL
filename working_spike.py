@@ -75,7 +75,7 @@ LEFT = port.A
 RIGHT = port.B
 PAIR_ID = motor_pair.PAIR_1
 
-MAX_DPS = 1000  # map %-speed to deg/sec for motor.run / motor_pair.move
+MAX_DPS = 1100  # map %-speed to deg/sec for motor.run / motor_pair.move
 
 
 def pct_to_dps(pct):
