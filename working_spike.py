@@ -59,6 +59,12 @@ def shortest_error(target, current):
     return normalize_angle(float(target) - float(current))
 
 
+def shortest_steering(steering, heading):
+    if heading < motion_sensor.get_yaw:
+        steering *= -1
+    return steering
+
+
 # ---------------- motor/encoder wrappers ----------------
 
 COLLISION_SENSOR = port.E
@@ -141,14 +147,16 @@ def line_follow(
 
 def gyro_turn(steering, heading, speed):
     """
-    steering (-100 to 100),
-    heading (180 to -180),
+    steering,
+    heading (Left 180 to Right -180),
     speed (deg/sec),
     \nGyro Turn - run with steering until yaw reaches heading (wrap-aware),
     using motor_pair.move
     """
 
     target_v = normalize_angle(heading)
+
+    steering = shortest_steering(steering, heading)
 
     motor_pair.move(PAIR_ID, steering, velocity=pct_to_dps(speed))
 
@@ -161,7 +169,7 @@ def gyro_turn(steering, heading, speed):
 
 def gyro_follow(heading, gain, speed, distance, condition=None):
     """
-    heading (180 to -180),
+    heading (Left 180 to Right -180),
     gain (Adjusted for each Robot),
     speed (deg/sec),
     distance (Wheel degrees),
@@ -212,7 +220,7 @@ def gyro_follow(heading, gain, speed, distance, condition=None):
 # ---------------- main ----------------
 
 
-def Taretare_Sauce_main():
+def Taretare_Sauce_1_main():
     GAIN = 0.2
     motor_pair.pair(PAIR_ID, LEFT, RIGHT)
     motion_sensor.reset_yaw(0)
@@ -233,7 +241,7 @@ def Taretare_Sauce_main():
     )
 
     gyro_turn(
-        steering=-100,
+        steering=100,
         heading=45,
         speed=15,
     )
@@ -255,7 +263,7 @@ def Taretare_Sauce_main():
     utime.sleep_ms(100)
 
     gyro_turn(
-        steering=-100,
+        steering=100,
         heading=25,
         speed=-10,
     )
@@ -282,7 +290,7 @@ def Taretare_Sauce_main():
     )
 
     gyro_turn(
-        steering=-100,
+        steering=100,
         heading=0,
         speed=15,
     )
@@ -330,7 +338,7 @@ def Taretare_Sauce_main():
     )
 
     gyro_turn(
-        steering=-100,
+        steering=100,
         heading=-90,
         speed=15,
     )
@@ -371,7 +379,7 @@ def Taretare_Sauce_main():
     )
 
     gyro_turn(
-        steering=-100,
+        steering=100,
         heading=90,
         speed=15,
     )
@@ -433,7 +441,7 @@ def Zaza_6_main():
     )
 
     gyro_turn(
-        steering=-100,
+        steering=100,
         heading=-75,
         speed=18.1818181818,
     )
@@ -507,23 +515,7 @@ def Zaza_6_main():
     print("done")
 
 
-def Zaza_main():
-    GAIN = 0.2
-    print("yo yo yo")
-    motor_pair.pair(PAIR_ID, LEFT, RIGHT)
-    motion_sensor.reset_yaw(0)
-    utime.sleep_ms(500)
-
-    gyro_follow(
-        heading=0,
-        gain=GAIN,
-        speed=54.5454545455,
-        distance=1525,
-        condition=lambda: color_sensor.color(port.E) == color.RED,
-    )
-
-
-def Anneuryysm_main():
+def Anneuryysm_3_main():
     GAIN = 0.2
     motor.reset_relative_position(port.D, 0)
     print("yo yo yo")
@@ -539,7 +531,7 @@ def Anneuryysm_main():
     )
 
     gyro_turn(
-        steering=-100,
+        steering=100,
         heading=15,
         speed=20,
     )
@@ -573,7 +565,7 @@ def Anneuryysm_main():
     )
 
     gyro_turn(
-        steering=-100,
+        steering=100,
         heading=90,
         speed=20,
     )
@@ -602,7 +594,7 @@ def Anneuryysm_main():
     utime.sleep_ms(100)
 
 
-def Stonks_main():
+def Stonks_2_main():
     motor.reset_relative_position(port.C, 0)
     motor.reset_relative_position(port.D, 0)
     motor_pair.move_for_degrees(motor_pair.PAIR_1, 0, 833)
@@ -616,7 +608,7 @@ def Stonks_main():
     motor_pair.move_for_degrees(motor_pair.PAIR_1, 0, -833)
 
 
-def WillemDafoe_main():
+def WillemDafoe_4_main():
     GAIN = 0.2
     print("willy")
     motor_pair.pair(PAIR_ID, LEFT, RIGHT)
@@ -634,7 +626,7 @@ def WillemDafoe_main():
     )
 
     gyro_turn(
-        steering=-100,
+        steering=100,
         heading=9,
         speed=18,
     )
@@ -688,9 +680,9 @@ def WillemDafoe_main():
     utime.sleep_ms(1000)
 
 
-def Feetpics_main():
+def Feetpics_5_main():
     pass
 
 
 if __name__ == "__main__":
-    WillemDafoe_main()
+    WillemDafoe_4_main()
