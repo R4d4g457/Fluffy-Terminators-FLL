@@ -75,7 +75,18 @@ LEFT = port.A
 RIGHT = port.B
 PAIR_ID = motor_pair.PAIR_1
 
+
 MAX_DPS = 1100  # map %-speed to deg/sec for motor.run / motor_pair.move
+
+
+def init():
+    motor_pair.pair(PAIR_ID, LEFT, RIGHT)
+    motor.reset_relative_position(RIGHT, 0)
+    motor.reset_relative_position(LEFT, 0)
+    motor.reset_relative_position(RIGHT_ACTUATOR, 0)
+    motor.reset_relative_position(LEFT_ACTUATOR, 0)
+    motion_sensor.reset_yaw(0)
+    utime.sleep_ms(200)
 
 
 def pct_to_dps(pct):
@@ -220,9 +231,6 @@ def gyro_follow(heading, gain, speed, distance, condition=None):
 
 def Taretare_Sauce_1_main():
     GAIN = 0.2
-    motor_pair.pair(PAIR_ID, LEFT, RIGHT)
-    motion_sensor.reset_yaw(0)
-    utime.sleep_ms(200)
 
     gyro_follow(
         heading=0,
@@ -418,11 +426,6 @@ def Taretare_Sauce_1_main():
 
 def Zaza_6_main():
     GAIN = 0.2
-    motor.reset_relative_position(port.D, 0)
-    print("yo yo yo")
-    motor_pair.pair(PAIR_ID, LEFT, RIGHT)
-    motion_sensor.reset_yaw(0)
-    utime.sleep_ms(500)
 
     gyro_follow(
         heading=0,
@@ -461,16 +464,15 @@ def Zaza_6_main():
         heading=0,
         speed=-15,
     )
-
+    print("follow")
     gyro_follow(
         heading=0,
         gain=GAIN,
         speed=27,
         distance=None,
+        condition=lambda: color_sensor.color(COLOUR_SENSOR) == color.WHITE,
     )
 
-    wait_until(lambda: color_sensor.color(COLOUR_SENSOR) == color.WHITE)
-    print("White")
     wait_until(lambda: color_sensor.color(COLOUR_SENSOR) == color.BLACK)
     print("Black")
     motor_pair.stop
@@ -499,11 +501,6 @@ def Zaza_6_main():
 
 def Anneuryysm_3_main():
     GAIN = 0.2
-    motor.reset_relative_position(port.D, 0)
-    print("yo yo yo")
-    motor_pair.pair(PAIR_ID, LEFT, RIGHT)
-    motion_sensor.reset_yaw(0)
-    utime.sleep_ms(100)
 
     gyro_follow(
         heading=0,
@@ -578,12 +575,6 @@ def Stonks_2_main():
 def WillemDafoe_4_main():
     GAIN = 0.1
     print("willy")
-    motor_pair.pair(PAIR_ID, LEFT, RIGHT)
-    motion_sensor.reset_yaw(0)
-    motor.run_to_absolute_position(LEFT_ACTUATOR, 0, 200)
-    utime.sleep_ms(100)
-    motor.reset_relative_position(LEFT_ACTUATOR, 0)
-    utime.sleep_ms(100)
 
     gyro_follow(
         heading=0,
@@ -659,4 +650,5 @@ def Feetpics_5_main():
 
 
 if __name__ == "__main__":
+    init()
     Zaza_6_main()
