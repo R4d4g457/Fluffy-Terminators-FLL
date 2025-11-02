@@ -106,7 +106,7 @@ def get_reflected_light(p, default=50):
         return float(default)
 
 
-# ---------------- My Blocks (custom procedures) ----------------
+# ---------------- motion functions ----------------
 
 
 def line_follow(
@@ -226,7 +226,7 @@ def gyro_follow(heading, gain, speed, distance, condition=None):
     motor_pair.stop(PAIR_ID)
 
 
-# ---------------- main ----------------
+# ---------------- mains ----------------
 
 
 def Taretare_Sauce_1_main():
@@ -424,79 +424,18 @@ def Taretare_Sauce_1_main():
     )
 
 
-def Zaza_6_main():
-    GAIN = 0.2
+def Stonks_2_main():
+    motor.reset_relative_position(port.C, 0)
+    motor.reset_relative_position(port.D, 0)
+    motor_pair.move_for_degrees(motor_pair.PAIR_1, 0, 833)
 
-    gyro_follow(
-        heading=0,
-        gain=GAIN,
-        speed=40,
-        distance=810,
-    )
+    for i in range(6):
+        motor.run_for_degrees(port.C, 190, 600)
+        motor_pair.move_for_degrees(motor_pair.PAIR_1, 0, -166)
+        motor.run_for_degrees(port.C, -190, -600)
+        motor_pair.move_for_degrees(motor_pair.PAIR_1, 0, 166)
 
-    # Score Boat Sand
-    gyro_follow(
-        heading=0,
-        gain=-GAIN,
-        speed=-25,
-        distance=-100,
-    )
-
-    gyro_turn(
-        steering=-100,
-        heading=75,
-        speed=15,
-    )
-
-    utime.sleep_ms(100)
-
-    gyro_follow(
-        heading=75,
-        gain=GAIN,
-        speed=20,
-        distance=450,
-    )
-
-    utime.sleep_ms(100)
-
-    gyro_turn(
-        steering=100,
-        heading=0,
-        speed=-15,
-    )
-    print("follow")
-    gyro_follow(
-        heading=0,
-        gain=GAIN,
-        speed=27,
-        distance=None,
-        condition=lambda: color_sensor.color(COLOUR_SENSOR) == color.WHITE,
-    )
-
-    wait_until(lambda: color_sensor.color(COLOUR_SENSOR) == color.BLACK)
-    print("Black")
-    motor_pair.stop
-
-    gyro_turn(
-        steering=-100,
-        heading=-85,
-        speed=10,
-    )
-
-    utime.sleep_ms(100)
-
-    gyro_follow(
-        heading=-85,
-        gain=GAIN,
-        speed=27,
-        distance=295,
-    )
-
-    motor.reset_relative_position(LEFT_ACTUATOR, 0)
-    motor.run_for_degrees(LEFT_ACTUATOR, -1800, -200)
-    utime.sleep_ms(2000)
-
-    print("done")
+    motor_pair.move_for_degrees(motor_pair.PAIR_1, 0, -833)
 
 
 def Anneuryysm_3_main():
@@ -556,20 +495,6 @@ def Anneuryysm_3_main():
         heading=225,
         speed=20,
     )
-
-
-def Stonks_2_main():
-    motor.reset_relative_position(port.C, 0)
-    motor.reset_relative_position(port.D, 0)
-    motor_pair.move_for_degrees(motor_pair.PAIR_1, 0, 833)
-
-    for i in range(6):
-        motor.run_for_degrees(port.C, 190, 600)
-        motor_pair.move_for_degrees(motor_pair.PAIR_1, 0, -166)
-        motor.run_for_degrees(port.C, -190, -600)
-        motor_pair.move_for_degrees(motor_pair.PAIR_1, 0, 166)
-
-    motor_pair.move_for_degrees(motor_pair.PAIR_1, 0, -833)
 
 
 def WillemDafoe_4_main():
@@ -647,6 +572,81 @@ def WillemDafoe_4_main():
 
 def Feetpics_5_main():
     pass
+
+
+def Zaza_6_main():
+    GAIN = 0.2
+
+    gyro_follow(
+        heading=0,
+        gain=GAIN,
+        speed=40,
+        distance=810,
+    )
+
+    # Score Boat Sand
+    gyro_follow(
+        heading=0,
+        gain=-GAIN,
+        speed=-25,
+        distance=-100,
+    )
+
+    gyro_turn(
+        steering=-100,
+        heading=75,
+        speed=15,
+    )
+
+    utime.sleep_ms(100)
+
+    gyro_follow(
+        heading=75,
+        gain=GAIN,
+        speed=20,
+        distance=450,
+    )
+
+    utime.sleep_ms(100)
+
+    gyro_turn(
+        steering=100,
+        heading=0,
+        speed=-15,
+    )
+    print("follow")
+    gyro_follow(
+        heading=0,
+        gain=GAIN,
+        speed=27,
+        distance=None,
+        condition=lambda: color_sensor.color(COLOUR_SENSOR) == color.WHITE,
+    )
+
+    wait_until(lambda: color_sensor.color(COLOUR_SENSOR) == color.BLACK)
+    print("Black")
+    motor_pair.stop
+
+    gyro_turn(
+        steering=-100,
+        heading=-85,
+        speed=10,
+    )
+
+    utime.sleep_ms(100)
+
+    gyro_follow(
+        heading=-85,
+        gain=GAIN,
+        speed=27,
+        distance=295,
+    )
+
+    motor.reset_relative_position(LEFT_ACTUATOR, 0)
+    motor.run_for_degrees(LEFT_ACTUATOR, -1800, -200)
+    utime.sleep_ms(2000)
+
+    print("done")
 
 
 if __name__ == "__main__":
