@@ -609,40 +609,47 @@ def Stonks_2_main():
 
 
 def WillemDafoe_4_main():
-    GAIN = 0.2
+    GAIN = 0.1
     print("willy")
     motor_pair.pair(PAIR_ID, LEFT, RIGHT)
     motion_sensor.reset_yaw(0)
-    motor.run_to_absolute_position(LEFT_ACTUATOR, 0, 200)
+    motor.run_to_absolute_position(RIGHT_ACTUATOR, 0, 200)
     utime.sleep_ms(100)
-    motor.reset_relative_position(LEFT_ACTUATOR, 0)
+    motor.reset_relative_position(RIGHT_ACTUATOR, 0)
     utime.sleep_ms(100)
 
     gyro_follow(
         heading=0,
         gain=GAIN,
-        speed=36,
-        distance=1000,
+        speed=10,
+        distance=100,
+    )
+
+    gyro_follow(
+        heading=0,
+        gain=GAIN,
+        speed=35 ,
+        distance=978,
     )
 
     gyro_turn(
         steering=100,
-        heading=9,
+        heading=8,
         speed=18,
     )
 
     gyro_follow(
-        heading=9,
+        heading=8,
         gain=GAIN,
         speed=27,
-        distance=400,
+        distance=430,
     )
 
     gyro_follow(
         heading=4,
         gain=-GAIN,
         speed=-18,
-        distance=-100,
+        distance=-80,
     )
 
     gyro_follow(
