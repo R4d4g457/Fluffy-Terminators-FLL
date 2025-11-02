@@ -67,10 +67,10 @@ def shortest_steering(steering, heading):
 
 # ---------------- motor/encoder wrappers ----------------
 
-COLLISION_SENSOR = port.E
-COLOUR_SENSOR = port.F
-LEFT_ACTUATOR = port.D
-RIGHT_ACTUATOR = port.C
+COLLISION_SENSOR = port.F
+COLOUR_SENSOR = port.E
+LEFT_ACTUATOR = port.C
+RIGHT_ACTUATOR = port.D
 LEFT = port.A
 RIGHT = port.B
 PAIR_ID = motor_pair.PAIR_1
@@ -427,88 +427,72 @@ def Zaza_6_main():
     gyro_follow(
         heading=0,
         gain=GAIN,
-        speed=55,
-        distance=1525,
+        speed=40,
+        distance=810,
+    )
+
+    # Score Boat Sand
+    gyro_follow(
+        heading=0,
+        gain=-GAIN,
+        speed=-25,
+        distance=-100,
+    )
+
+    gyro_turn(
+        steering=-100,
+        heading=75,
+        speed=15,
+    )
+
+    utime.sleep_ms(100)
+
+    gyro_follow(
+        heading=75,
+        gain=GAIN,
+        speed=20,
+        distance=450,
+    )
+
+    utime.sleep_ms(100)
+
+    gyro_turn(
+        steering=100,
+        heading=0,
+        speed=-15,
     )
 
     gyro_follow(
         heading=0,
-        gain=-GAIN,
-        speed=-43,
-        distance=-40,
-    )
-
-    gyro_turn(
-        steering=100,
-        heading=-75,
-        speed=18.1818181818,
-    )
-
-    utime.sleep_ms(100)
-
-    gyro_follow(
-        heading=-80,
-        gain=GAIN,
-        speed=36,
-        distance=395,
-    )
-
-    utime.sleep_ms(100)
-
-    gyro_turn(
-        steering=100,
-        heading=-105,
-        speed=-27,
-    )
-
-    motor.reset_relative_position(port.D, 0)
-    motor.run_for_degrees(port.D, 720, 1100)
-    utime.sleep_ms(1000)
-    motor.run_for_degrees(port.D, -720, 1100)
-    utime.sleep_ms(1000)
-
-    gyro_follow(
-        heading=-80,
-        gain=-GAIN,
-        speed=-27,
-        distance=-400,
-    )
-
-    gyro_turn(
-        steering=100,
-        heading=-45,
-        speed=27,
-    )
-
-    utime.sleep_ms(100)
-
-    gyro_follow(
-        heading=45,
         gain=GAIN,
         speed=27,
-        distance=100,
+        distance=None,
     )
 
+    wait_until(lambda: color_sensor.color(COLOUR_SENSOR) == color.WHITE)
+    print("White")
+    wait_until(lambda: color_sensor.color(COLOUR_SENSOR) == color.BLACK)
+    print("Black")
+    motor_pair.stop
+
     gyro_turn(
-        steering=100,
-        heading=90,
-        speed=27,
+        steering=-100,
+        heading=-85,
+        speed=10,
     )
 
     utime.sleep_ms(100)
 
     gyro_follow(
-        heading=90,
+        heading=-85,
         gain=GAIN,
-        speed=500,
-        distance=45,
+        speed=27,
+        distance=295,
     )
 
-    motor.reset_relative_position(port.C, 0)
-    motor.run_for_degrees(port.C, 1280, 200)
-    utime.sleep_ms(1000)
-    motor.run_for_degrees(port.C, -1280, -300)
-    utime.sleep_ms(1000)
+    motor.reset_relative_position(LEFT_ACTUATOR, 0)
+    motor.run_for_degrees(LEFT_ACTUATOR, -1800, -200)
+    utime.sleep_ms(2000)
 
     print("done")
 
@@ -596,9 +580,9 @@ def WillemDafoe_4_main():
     print("willy")
     motor_pair.pair(PAIR_ID, LEFT, RIGHT)
     motion_sensor.reset_yaw(0)
-    motor.run_to_absolute_position(RIGHT_ACTUATOR, 0, 200)
+    motor.run_to_absolute_position(LEFT_ACTUATOR, 0, 200)
     utime.sleep_ms(100)
-    motor.reset_relative_position(RIGHT_ACTUATOR, 0)
+    motor.reset_relative_position(LEFT_ACTUATOR, 0)
     utime.sleep_ms(100)
 
     gyro_follow(
@@ -611,7 +595,7 @@ def WillemDafoe_4_main():
     gyro_follow(
         heading=0,
         gain=GAIN,
-        speed=35 ,
+        speed=35,
         distance=978,
     )
 
@@ -655,7 +639,7 @@ def WillemDafoe_4_main():
         speed=4,
     )
 
-    motor.run_for_degrees(RIGHT_ACTUATOR, -250, 200)
+    motor.run_for_degrees(LEFT_ACTUATOR, -250, 200)
     utime.sleep_ms(500)
 
     gyro_follow(
