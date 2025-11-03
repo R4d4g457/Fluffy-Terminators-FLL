@@ -60,7 +60,7 @@ def shortest_error(target, current):
 
 
 def shortest_steering(steering, heading):
-    if heading < yaw_deg():
+    if heading > yaw_deg():
         steering *= -1
     return steering
 
@@ -109,19 +109,16 @@ def get_reflected_light(p, default=50):
 # ---------------- motion functions ----------------
 
 
-def line_follow(
-    speed, gain, target=50, lineside=1, color_port=port.C, distance=None, condition=None
-):
+def line_follow(speed, gain, target=50, lineside=1, distance=None, condition=None):
     """
     Line Follow - Speed, Gain, Target, LineSide (1 = light on right),
     Port for color sensor.
     Uses individual motor.run(...) (deg/sec) to drive.
     """
     n_Error = 0.0
-    cs_port = color_port if color_port not in (None, "") else port.C
 
     while True:
-        reflect_v = get_reflected_light(cs_port, default=50)
+        reflect_v = get_reflected_light(COLOUR_SENSOR, default=50)
 
         # Compute error depending on side of the line
         if lineside == 1:
@@ -200,7 +197,7 @@ def gyro_follow(heading, gain, speed, distance, condition=None):
     # Follow loop
     while True:
         n_CurrentHeading = yaw_deg()
-        n_Error = shortest_error(n_TargetHeading, n_CurrentHeading) * gain
+        n_Error = -shortest_error(n_TargetHeading, n_CurrentHeading) * gain
 
         steering_cmd = int(clamp(n_Error, -100, 100))
         motor_pair.move(PAIR_ID, steering_cmd, velocity=pct_to_dps(speed))
@@ -230,7 +227,7 @@ def gyro_follow(heading, gain, speed, distance, condition=None):
 
 
 def Taretare_Sauce_1_main():
-    GAIN = 0.2
+    GAIN = 2
 
     gyro_follow(
         heading=0,
@@ -372,10 +369,10 @@ def Taretare_Sauce_1_main():
 
     # Score Flag
     motor.reset_relative_position(port.C, 0)
-    motor.run_for_degrees(port.C, 170, 100)
-    utime.sleep_ms(1250)
-    motor.run_for_degrees(port.C, -150, 100)
-    utime.sleep_ms(1250)
+    motor.run_for_degrees(port.C, 170, 600)
+    utime.sleep_ms(750)
+    motor.run_for_degrees(port.C, -150, 800)
+    utime.sleep_ms(750)
 
     gyro_follow(
         heading=-90,
@@ -392,10 +389,10 @@ def Taretare_Sauce_1_main():
 
     # Score Basket
     motor.reset_relative_position(port.C, 0)
-    motor.run_for_degrees(port.C, 150, 100)
-    utime.sleep_ms(1250)
-    motor.run_for_degrees(port.C, -170, 100)
-    utime.sleep_ms(1250)
+    motor.run_for_degrees(port.C, 170, 600)
+    utime.sleep_ms(750)
+    motor.run_for_degrees(port.C, -150, 800)
+    utime.sleep_ms(750)
 
     gyro_turn(
         steering=100,
@@ -439,7 +436,7 @@ def Stonks_2_main():
 
 
 def Anneuryysm_3_main():
-    GAIN = 0.2
+    GAIN = 2
 
     gyro_follow(
         heading=0,
@@ -498,7 +495,7 @@ def Anneuryysm_3_main():
 
 
 def WillemDafoe_4_main():
-    GAIN = 0.1
+    GAIN = 2
     print("willy")
 
     gyro_follow(
@@ -575,7 +572,7 @@ def Feetpics_5_main():
 
 
 def Zaza_6_main():
-    GAIN = 0.2
+    GAIN = 2
 
     gyro_follow(
         heading=0,
@@ -651,4 +648,9 @@ def Zaza_6_main():
 
 if __name__ == "__main__":
     init()
-    Zaza_6_main()
+    gyro_follow(
+        heading=0,
+        gain=2,
+        speed=40,
+        distance=1000,
+    )
