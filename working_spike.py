@@ -345,7 +345,7 @@ def Zaza_5_main():
     
     gyro_turn(
         steering=100,
-        heading=10,
+        heading=15,
         speed=30
     )
     
@@ -353,6 +353,19 @@ def Zaza_5_main():
     wait_until(lambda: color_sensor.color(COLOUR_SENSOR) == color.WHITE)
     wait_until(lambda: color_sensor.color(COLOUR_SENSOR) == color.BLACK)
     motor_pair.stop(PAIR_ID)
+    
+    gyro_turn(
+        steering=100,
+        heading=-90,
+        speed=30
+    )
+    
+    gyro_follow(
+        heading=-90,
+        gain=GAIN,
+        speed=40,
+        distance=200
+    )
      
     
 
