@@ -297,7 +297,7 @@ def Taretare_Sauce_1_main():
 
 
 def Stonks_2_main():
-    motor.reset_relative_position(port.C, 0)
+    
     motor.reset_relative_position(port.D, 0)
     motor_pair.move_for_degrees(motor_pair.PAIR_1, 0, 833)
 
@@ -311,16 +311,63 @@ def Stonks_2_main():
 
 
 def Anneuryysm_3_main():
-    GAIN = 2
+    GAIN = 2 
+    motor.reset_relative_position(port.D, 0)
+    motor.reset_relative_position(port.C, 0)
+    #Travel
+    
     gyro_follow(heading=0, gain=GAIN, speed=40, distance=620)
     gyro_turn(heading=33, speed=12)
-    gyro_follow(heading=33, gain=GAIN, speed=40, distance=260)
+    gyro_follow(heading=33, gain=GAIN, speed=40, distance=280)
+    
+    #Score Market
+    
     gyro_turn(heading=120, speed=12)
-    gyro_follow(heading=120, gain=GAIN, speed=40, distance=300)
-    gyro_follow(heading=120, gain=-GAIN, speed=-55, distance=-250)
+    gyro_follow(heading=120, gain=GAIN, speed=40, distance=400)
+    gyro_turn(heading=125, speed=12)
+    
+    #Score raise
+    
+    gyro_follow(heading=125, gain=-GAIN, speed=-55, distance=-100)
+    gyro_turn(heading=150, speed=20)
+    gyro_follow(heading=150, gain=GAIN, speed=55, distance=100)
     gyro_turn(heading=45, speed=20)
-    gyro_follow(heading=45, gain=GAIN, speed=55, distance=650)
-    gyro_turn(heading=225, speed=20)
+    gyro_follow(heading=45, gain=GAIN, speed=55, distance=50)
+    motor.run_for_degrees(port.D, 650, 360)
+    utime.sleep_ms(1500)
+    gyro_follow(heading=45, gain=-GAIN, speed=-50, distance=-350)
+    
+    #Travel
+    
+    gyro_follow(heading=45, gain=GAIN, speed=50, distance=200)
+    motor.run_for_degrees(port.D, -300, 360)
+    utime.sleep_ms(500)
+    gyro_follow(heading=45, gain=-GAIN, speed=-50, distance=-200)
+    gyro_turn(heading=90, speed=20)
+    motor.run_for_degrees(port.C, -540, 360)
+    utime.sleep_ms(200)
+    gyro_follow(heading=90,gain=GAIN,speed=50,distance=580)
+    
+    #Collect sample
+    
+    gyro_turn(heading=0, speed=20)
+    gyro_follow(heading=0,gain=GAIN,speed=50,distance=200)
+    motor.run_for_degrees(port.C, 180, 360)
+    gyro_follow(heading=0, gain=-GAIN,speed=-50,distance=-400)
+    motor.run_for_degrees(port.C, 360, 360)
+    
+    #Travel
+    
+    gyro_turn(heading=90, speed=20)
+    gyro_follow(heading=90, gain=GAIN, speed=50, distance=600)
+    gyro_turn(heading=0, speed=20)
+    gyro_follow(heading=0, gain=GAIN, speed=50, distance=250)
+    gyro_turn(heading=45, speed=20)
+    
+    #Statue
+    
+    motor.run_for_degrees(port.C, -560, 360)
+    utime.sleep(2)
 
 
 def WillemDafoe_4_main():
@@ -395,4 +442,4 @@ def Mercy_Dash():
 
 if __name__ == "__main__":
     init()
-    Mercy_Dash()
+    Anneuryysm_3_main()
