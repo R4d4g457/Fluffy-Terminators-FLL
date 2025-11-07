@@ -241,11 +241,11 @@ def Taretare_Sauce_1_main():
     gyro_turn(heading=41, speed=15)
     gyro_follow(heading=41, gain=-GAIN, speed=-30, distance=-75)
 
-    motor.reset_relative_position(port.D, 0)
+    motor.reset_relative_position(RIGHT_ACTUATOR, 0)
     utime.sleep_ms(100)
-    motor.run_for_degrees(port.D, 1800, 1100)
+    motor.run_for_degrees(RIGHT_ACTUATOR, 1800, 1100)
     utime.sleep_ms(1250)
-    motor.run_for_degrees(port.D, -1000, 1100)
+    motor.run_for_degrees(RIGHT_ACTUATOR, -1000, 1100)
     utime.sleep_ms(1100)
 
     utime.sleep_ms(100)
@@ -274,20 +274,20 @@ def Taretare_Sauce_1_main():
     gyro_follow(heading=-90, gain=-GAIN, speed=-40, distance=-500)
 
     # Score Flag
-    motor.reset_relative_position(port.C, 0)
-    motor.run_for_degrees(port.C, 170, 120)
+    motor.reset_relative_position(LEFT_ACTUATOR, 0)
+    motor.run_for_degrees(LEFT_ACTUATOR, 170, 120)
     utime.sleep_ms(1500)
-    motor.run_for_degrees(port.C, -150, 150)
+    motor.run_for_degrees(LEFT_ACTUATOR, -150, 150)
     utime.sleep_ms(750)
 
     gyro_follow(heading=-90, gain=-GAIN, speed=-30, distance=-135)
     gyro_turn(heading=88, speed=15)
 
     # Score Basket
-    motor.reset_relative_position(port.C, 0)
-    motor.run_for_degrees(port.C, 190, 150)
+    motor.reset_relative_position(LEFT_ACTUATOR, 0)
+    motor.run_for_degrees(LEFT_ACTUATOR, 190, 150)
     utime.sleep_ms(750)
-    motor.run_for_degrees(port.C, -140, 150)
+    motor.run_for_degrees(LEFT_ACTUATOR, -140, 150)
     utime.sleep_ms(750)
 
     gyro_turn(heading=87, speed=25)
@@ -309,8 +309,8 @@ def Stonks_2_main():
 
 def Anneuryysm_3_main():
     GAIN = 2
-    motor.reset_relative_position(port.D, 0)
-    motor.reset_relative_position(port.C, 0)
+    motor.reset_relative_position(RIGHT_ACTUATOR, 0)
+    motor.reset_relative_position(LEFT_ACTUATOR, 0)
     # Travel
 
     gyro_follow(heading=0, gain=GAIN, speed=40, distance=620)
@@ -320,28 +320,28 @@ def Anneuryysm_3_main():
     # Score Market
 
     gyro_turn(heading=120, speed=12)
-    gyro_follow(heading=120, gain=GAIN, speed=40, distance=400)
+    gyro_follow(heading=120, gain=GAIN, speed=40, distance=375)
     gyro_turn(heading=125, speed=12)
 
-    # Score raise
-
+    # Travel
     gyro_follow(heading=125, gain=-GAIN, speed=-55, distance=-100)
     gyro_turn(heading=150, speed=20)
     gyro_follow(heading=150, gain=GAIN, speed=55, distance=100)
     gyro_turn(heading=45, speed=20)
-    gyro_follow(heading=45, gain=GAIN, speed=55, distance=50)
-    motor.run_for_degrees(port.D, 650, 360)
+
+    # Score Roof
+    gyro_follow(heading=45, gain=GAIN, speed=55, distance=75)
+    motor.run_for_degrees(RIGHT_ACTUATOR, 400, 360)
     utime.sleep_ms(1500)
     gyro_follow(heading=45, gain=-GAIN, speed=-50, distance=-350)
-
-    # Travel
-
     gyro_follow(heading=45, gain=GAIN, speed=50, distance=200)
-    motor.run_for_degrees(port.D, -300, 360)
+    motor.run_for_degrees(RIGHT_ACTUATOR, -400, 360)
     utime.sleep_ms(500)
     gyro_follow(heading=45, gain=-GAIN, speed=-50, distance=-200)
+
+    # Travel
     gyro_turn(heading=90, speed=20)
-    motor.run_for_degrees(port.C, -540, 360)
+    motor.run_for_degrees(LEFT_ACTUATOR, -540, 360)
     utime.sleep_ms(200)
     gyro_follow(heading=90, gain=GAIN, speed=50, distance=580)
 
@@ -349,22 +349,44 @@ def Anneuryysm_3_main():
 
     gyro_turn(heading=0, speed=20)
     gyro_follow(heading=0, gain=GAIN, speed=50, distance=200)
-    motor.run_for_degrees(port.C, 180, 360)
+    motor.run_for_degrees(LEFT_ACTUATOR, 180, 360)
     gyro_follow(heading=0, gain=-GAIN, speed=-50, distance=-400)
-    motor.run_for_degrees(port.C, 360, 360)
+    motor.run_for_degrees(LEFT_ACTUATOR, 360, 360)
 
     # Travel
 
     gyro_turn(heading=90, speed=20)
     gyro_follow(heading=90, gain=GAIN, speed=50, distance=600)
-    gyro_turn(heading=0, speed=20)
-    gyro_follow(heading=0, gain=GAIN, speed=50, distance=250)
     gyro_turn(heading=45, speed=20)
+    gyro_follow(heading=45, gain=GAIN, speed=50, distance=275)
+    gyro_turn(heading=90, speed=20)
+    gyro_follow(heading=90, gain=GAIN, speed=50, distance=400)
+    gyro_turn(heading=-40, speed=20)
 
     # Statue
-
-    motor.run_for_degrees(port.C, -560, 360)
-    utime.sleep(2)
+    motor.run_for_degrees(RIGHT_ACTUATOR, 400, 360)
+    utime.sleep_ms(1000)
+    gyro_turn(heading=0, speed=20)
+    motor.run_for_degrees(RIGHT_ACTUATOR, -400, 360)
+    utime.sleep_ms(2000)
+    gyro_follow(heading=0, gain=-GAIN, speed=-50, distance=-150)
+    gyro_turn(heading=45, speed=20)
+    gyro_follow(heading=45, gain=GAIN, speed=50, distance=1100)
+    gyro_turn(heading=-50, speed=20)
+    motor.run_for_degrees(RIGHT_ACTUATOR, 400, 360)
+    utime.sleep_ms(200)
+    gyro_follow(heading=-50, gain=GAIN, speed=50, distance=500)
+    motor.run_for_degrees(RIGHT_ACTUATOR, -400, 360)
+    utime.sleep_ms(2000)
+    gyro_follow(heading=-50, gain=-GAIN, speed=-50, distance=-800)
+    gyro_follow(
+        heading=0,
+        gain=-GAIN,
+        speed=-75,
+        distance=None,
+        condition=lambda: color_sensor.color(COLOUR_SENSOR) == color.GREEN
+        or color_sensor.color(COLOUR_SENSOR) == color.RED,
+    )
 
 
 def WillemDafoe_4_main():
@@ -388,10 +410,10 @@ def WillemDafoe_4_main():
         gain=-GAIN,
         speed=-27,
         distance=0,
-        condition=lambda: (color_sensor.color(port.E)) == color.GREEN,
+        condition=lambda: (color_sensor.color(COLOUR_SENSOR)) == color.GREEN,
     )
 
-    motor.run_for_degrees(port.D, 300, 200)
+    motor.run_for_degrees(RIGHT_ACTUATOR, 300, 200)
     utime.sleep_ms(1000)
 
 
@@ -439,3 +461,4 @@ def Mercy_Dash():
 
 if __name__ == "__main__":
     init()
+    Anneuryysm_3_main()
