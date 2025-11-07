@@ -5,7 +5,7 @@ import motor
 import motor_pair
 import utime
 from hub import port, motion_sensor, button
-import math.copysign
+from math import copysign, exp
 
 
 def wait_until(pred, timeout=None, poll_ms=10):
@@ -169,10 +169,10 @@ def gyro_turn(heading, speed=30):
             break
 
         # Inverted direction fix — corrects spin direction
-        turn_dir = -math.copysign(1, error)
+        turn_dir = -copysign(1, error)
 
         # Non-linear ramp for smooth deceleration
-        base_speed = MIN_SPD + (MAX_SPD - MIN_SPD) * (1 - math.exp(-abs(error) / DECAY))
+        base_speed = MIN_SPD + (MAX_SPD - MIN_SPD) * (1 - exp(-abs(error) / DECAY))
         turn_speed = clamp(base_speed, MIN_SPD, MAX_SPD)
 
         steering = int(turn_dir * 100)
@@ -239,7 +239,7 @@ def Taretare_Sauce_1_main():
 
     gyro_follow(heading=0, gain=GAIN, speed=45, distance=1450)
     gyro_turn(heading=41, speed=15)
-    gyro_follow(heading=41, gain=-GAIN, speed=-30, distance=-100)
+    gyro_follow(heading=41, gain=-GAIN, speed=-30, distance=-75)
 
     motor.reset_relative_position(port.D, 0)
     utime.sleep_ms(100)
@@ -249,8 +249,8 @@ def Taretare_Sauce_1_main():
     utime.sleep_ms(1100)
 
     utime.sleep_ms(100)
-    gyro_turn(heading=25, speed=-10)
-    gyro_follow(heading=25, gain=GAIN, speed=30, distance=100)
+    gyro_turn(heading=30, speed=-10)
+    gyro_follow(heading=30, gain=GAIN, speed=30, distance=120)
 
     # Loose Forge
     gyro_turn(heading=-15, speed=15)
@@ -259,8 +259,8 @@ def Taretare_Sauce_1_main():
     gyro_follow(heading=0, gain=-GAIN, speed=-30, distance=-65)
 
     # Push Rocks
-    gyro_turn(heading=-90, speed=15)
-    gyro_follow(heading=-90, gain=GAIN, speed=30, distance=600)
+    gyro_turn(heading=-86, speed=15)
+    gyro_follow(heading=-86, gain=GAIN, speed=30, distance=600)
     gyro_follow(heading=-90, gain=-GAIN, speed=-30, distance=-500)
 
     # Scoring Scale
@@ -280,8 +280,8 @@ def Taretare_Sauce_1_main():
     motor.run_for_degrees(port.C, -150, 150)
     utime.sleep_ms(750)
 
-    gyro_follow(heading=-90, gain=-GAIN, speed=-30, distance=-160)
-    gyro_turn(heading=89, speed=15)
+    gyro_follow(heading=-90, gain=-GAIN, speed=-30, distance=-135)
+    gyro_turn(heading=88, speed=15)
 
     # Score Basket
     motor.reset_relative_position(port.C, 0)
@@ -324,7 +324,7 @@ def Anneuryysm_3_main():
 
 
 def WillemDafoe_4_main():
-    GAIN = 2
+    GAIN = 0.2
     print("willy")
 
     gyro_follow(heading=0, gain=GAIN, speed=10, distance=100)
@@ -389,7 +389,10 @@ def Zaza_6_main():
     print("done")
 
 
+def Mercy_Dash():
+    gyro_follow(heading=0, gain=0.2, speed=75, distance=3700)
+
+
 if __name__ == "__main__":
     init()
-    Taretare_Sauce_1_main()
-Anneuryysm_3_main
+    Mercy_Dash()
