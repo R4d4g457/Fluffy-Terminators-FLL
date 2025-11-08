@@ -147,7 +147,7 @@ def line_follow(speed, gain, target=50, lineside=1, distance=None, condition=Non
     motor_pair.stop(PAIR_ID)
 
 
-def gyro_turn(heading, speed=30):
+def gyro_turn(heading, speed=20):
     """
     Turn to an absolute heading using shortest path.
     Positive = clockwise, Negative = anticlockwise.
@@ -189,7 +189,7 @@ def gyro_turn(heading, speed=30):
     utime.sleep_ms(100)
 
 
-def gyro_follow(heading, gain, speed, distance, condition=None):
+def gyro_follow(heading, gain=0.2, speed=30, distance=None, condition=None):
     """
     Gyro Follow — corrected to match new turn direction.
     heading: target heading
@@ -237,11 +237,12 @@ def gyro_follow(heading, gain, speed, distance, condition=None):
 def Taretare_Sauce_1_main():
     GAIN = 0.19
 
+    # Travel to & Turn parallel with Forge
     gyro_follow(heading=0, gain=GAIN, speed=45, distance=1450)
     gyro_turn(heading=41, speed=15)
     gyro_follow(heading=41, gain=-GAIN, speed=-30, distance=-75)
 
-    motor.reset_relative_position(RIGHT_ACTUATOR, 0)
+    # Pick up Millstone
     utime.sleep_ms(100)
     motor.run_for_degrees(RIGHT_ACTUATOR, 1800, 1100)
     utime.sleep_ms(1250)
@@ -290,6 +291,7 @@ def Taretare_Sauce_1_main():
     motor.run_for_degrees(LEFT_ACTUATOR, -140, 150)
     utime.sleep_ms(750)
 
+    # Return to Blue Home
     gyro_turn(heading=87, speed=25)
     gyro_follow(heading=87, gain=-GAIN, speed=-30, distance=-900)
     gyro_turn(heading=25, speed=20)
@@ -297,28 +299,32 @@ def Taretare_Sauce_1_main():
 
 
 def Stonks_2_main():
+
+    # Travel
     gyro_follow(heading=0, gain=0.2, speed=35, distance=815)
+
+    # Turn to align with silo
     gyro_turn(heading=-12, speed=15)
+
+    # Push Silo lever 4 times
     for i in range(4):
         motor.run_for_degrees(RIGHT_ACTUATOR, 560, 350)
         utime.sleep_ms(750)
         motor.run_for_degrees(RIGHT_ACTUATOR, -560, 350)
         utime.sleep_ms(750)
+
+    # Return to Blue Home
     gyro_follow(heading=15, gain=-0.2, speed=-60, distance=-850)
 
 
 def Anneuryysm_3_main():
-    GAIN = 2
-    motor.reset_relative_position(RIGHT_ACTUATOR, 0)
-    motor.reset_relative_position(LEFT_ACTUATOR, 0)
+    GAIN = 0.2
     # Travel
-
     gyro_follow(heading=0, gain=GAIN, speed=40, distance=620)
     gyro_turn(heading=33, speed=12)
     gyro_follow(heading=33, gain=GAIN, speed=40, distance=280)
 
     # Score Market
-
     gyro_turn(heading=120, speed=12)
     gyro_follow(heading=120, gain=GAIN, speed=40, distance=375)
     gyro_turn(heading=125, speed=12)
@@ -346,7 +352,6 @@ def Anneuryysm_3_main():
     gyro_follow(heading=90, gain=GAIN, speed=50, distance=580)
 
     # Collect sample
-
     gyro_turn(heading=0, speed=20)
     gyro_follow(heading=0, gain=GAIN, speed=50, distance=200)
     motor.run_for_degrees(LEFT_ACTUATOR, 180, 360)
@@ -354,7 +359,6 @@ def Anneuryysm_3_main():
     motor.run_for_degrees(LEFT_ACTUATOR, 360, 360)
 
     # Travel
-
     gyro_turn(heading=90, speed=20)
     gyro_follow(heading=90, gain=GAIN, speed=50, distance=600)
     gyro_turn(heading=45, speed=20)
@@ -370,22 +374,27 @@ def Anneuryysm_3_main():
     motor.run_for_degrees(RIGHT_ACTUATOR, -400, 360)
     utime.sleep_ms(2000)
     gyro_follow(heading=0, gain=-GAIN, speed=-50, distance=-150)
+
+    # Travel
     gyro_turn(heading=45, speed=20)
     gyro_follow(heading=45, gain=GAIN, speed=50, distance=1100)
     gyro_turn(heading=-50, speed=20)
+
+    # Lift Minecart
     motor.run_for_degrees(RIGHT_ACTUATOR, 400, 360)
     utime.sleep_ms(200)
     gyro_follow(heading=-50, gain=GAIN, speed=50, distance=500)
     motor.run_for_degrees(RIGHT_ACTUATOR, -400, 360)
     utime.sleep_ms(2000)
+
+    # Return to Red Home
     gyro_follow(heading=-50, gain=-GAIN, speed=-50, distance=-800)
     gyro_follow(
         heading=0,
         gain=-GAIN,
         speed=-75,
         distance=None,
-        condition=lambda: color_sensor.color(COLOUR_SENSOR) == color.GREEN
-        or color_sensor.color(COLOUR_SENSOR) == color.RED,
+        condition=lambda: color_sensor.color(COLOUR_SENSOR) == color.GREEN,
     )
 
 
@@ -422,17 +431,18 @@ def Feetpics_5_main():
 
 
 def Zaza_6_main():
-    GAIN = 2
+    GAIN = 0.2
 
+    # Uncover Boat
     gyro_follow(heading=0, gain=GAIN, speed=40, distance=810)
     gyro_follow(heading=0, gain=-GAIN, speed=-25, distance=-100)
+
+    # Travel
     gyro_turn(heading=75, speed=15)
     utime.sleep_ms(100)
     gyro_follow(heading=75, gain=GAIN, speed=20, distance=450)
     utime.sleep_ms(100)
     gyro_turn(heading=0, speed=-15)
-    print("follow")
-
     gyro_follow(
         heading=0,
         gain=GAIN,
@@ -440,16 +450,13 @@ def Zaza_6_main():
         distance=None,
         condition=lambda: color_sensor.color(COLOUR_SENSOR) == color.WHITE,
     )
-
     wait_until(lambda: color_sensor.color(COLOUR_SENSOR) == color.BLACK)
-    print("Black")
     motor_pair.stop
 
+    # Raise Crane
     gyro_turn(heading=-85, speed=10)
     utime.sleep_ms(100)
     gyro_follow(heading=-85, gain=GAIN, speed=27, distance=295)
-
-    motor.reset_relative_position(LEFT_ACTUATOR, 0)
     motor.run_for_degrees(LEFT_ACTUATOR, -1800, -200)
     utime.sleep_ms(2000)
     print("done")
