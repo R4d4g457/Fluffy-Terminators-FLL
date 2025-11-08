@@ -3,18 +3,23 @@
 
 **Version:** v12  
 **Date:** November 2025  
-**Author:** Fluffy Terminators FLL team  
+**Author:** Fluffy Terminators FLL Team  
 
 ---
 
-## 1. Purpose  
+## 1  Purpose  
 
-This document explains how we generated and refined our custom Python type-stub package (`spike_stubs/`) for the **LEGO Education SPIKE Prime** MicroPython API.  
-The goal was to provide full **editor IntelliSense, hover help, and type checking** within **VS Code**, while running code that matches the **on-hub SPIKE 3 Python runtime** (as documented at [spike.legoeducation.com/prime/modal/help/lls-help-python](https://spike.legoeducation.com/prime/modal/help/lls-help-python)).
+This document explains how the team generated and refined its custom Python type-stub package (`spike_stubs/`) for the **LEGO Education SPIKE Prime** MicroPython API and how to integrate it with **VS Code** using **Peter Staev’s LEGO SPIKE Prime / Mindstorms extension**.
+
+The goals were to:  
+
+- Enable full **IntelliSense**, hover help, and static type checking in VS Code.  
+- Ensure compatibility with the **SPIKE 3 MicroPython runtime** on the hub.  
+- Provide one-click **upload and run** functionality directly from VS Code.
 
 ---
 
-## 2. Background  
+## 2  Background  
 
 When editing SPIKE Prime programs in VS Code, imports such as:
 
@@ -24,68 +29,52 @@ import force_sensor
 from hub import port
 ```
 
-produce unresolved-import warnings because these modules only exist on the SPIKE hub’s MicroPython runtime.
+typically raise unresolved import warnings because these modules only exist within the hub firmware.
 
-No authoritative stub set existed for the current SPIKE 3 API (2023-2025 releases).  
-Community stubs such as `pyhub-stubs` cover earlier SPIKE 2 or Mindstorms APIs but lack modules like `color_matrix`, `app.music`, and `runloop`.
-
-Therefore, we created a custom stub collection and incrementally refined it through twelve iterations.
+No official or community stubs covered the 2023–2025 SPIKE 3 API.  
+We therefore built a complete set of **custom type stubs** and iteratively refined them through twelve versions, integrating them with the VS Code extension for upload and execution.
 
 ---
 
-## 3. Development Process Summary  
+## 3  Development Summary  
 
 | Version | Focus | Key Changes |
-|----------|-------|-------------|
-| **v1 – v2** | Initial baseline | Added core module stubs (`motor`, `sensor`, `hub`, `app`). Minimal signatures, no docstrings. |
-| **v3** | Added MicroPython compatibility | Introduced `ujson`, `uos`, `utime`, `ustruct`, etc., so standard imports wouldn’t break. |
-| **v4** | Restored lost per-function docs | Merged back docstrings for `distance_sensor`, `wait`, `app`, and sensor APIs after regression. |
-| **v5** | Completed documentation coverage | Ensured `motor`, `motor_pair`, `light`, `status_light`, `timer`, and all `u*` modules had descriptive docstrings. |
-| **v6** | Verified integer vs string constants | Corrected `color.RED = 1` etc. to match official SPIKE 3 docs. Added `orientation` constants. |
-| **v7** | Corrected API shape | Fixed `hub.motion_sensor.tilt_angles()` return type, parameter order in `motor_pair.move_for_degrees`, and added `app.music.play_note`, `play_drum`, `set_tempo`, `get_tempo`, `stop`. |
-| **v8** | Restored doc coverage after restructuring | Re-added rich docstrings to every callable; unified SPIKE 3 and MicroPython modules. |
-| **v9** | Added new music API | Introduced `app.music.play_instrument()` with docstring and verified async signatures. |
-| **v10** | Added display peripherals | Created full `color_matrix.pyi`, `device.pyi`, `runloop.pyi` with detailed documentation. |
-| **v11** | Completed `time` and `hub` modules | Added comprehensive docstrings for `time`, `utime`, and all submodules of `hub` (button, light, light_matrix, motion_sensor, sound). |
-| **v12** | Final polish | Restored `time.localtime()`, `time.mktime()`; added all built-in `IMAGE_*` constants (`IMAGE_CONFUSED`, `IMAGE_ANGRY`, etc.) to `hub.light_matrix`. |
+|:--:|:--|:--|
+| **v1–v2** | Baseline | Added core modules (`motor`, `sensor`, `hub`, `app`). Minimal signatures. |
+| **v3** | MicroPython compatibility | Added `ujson`, `uos`, `utime`, `ustruct`, etc. |
+| **v4–v5** | Documentation coverage | Restored and expanded function-level docstrings. |
+| **v6–v7** | API accuracy | Fixed constants and parameter orders; added `app.music` methods. |
+| **v8–v9** | Completeness | Merged SPIKE + MicroPython API shapes; added `play_instrument()`. |
+| **v10–v11** | Display and system modules | Added `color_matrix`, `device`, `runloop`, and fully documented `time`, `utime`, and `hub`. |
+| **v12** | Final polish | Restored `time.localtime()` / `mktime()` and added `IMAGE_*` constants to `hub.light_matrix`. |
 
 ---
 
-## 4. Data Sources and Verification  
+## 4  Data Sources and Verification  
 
-The stub content was cross-checked against:
-
-- The **official LEGO SPIKE Prime Python help** site  
-  → <https://spike.legoeducation.com/prime/modal/help/lls-help-python>
-- Examples and tutorials from **LEGO Education Lesson Plans**  
-  → <https://education.lego.com/en-au/lessons/?products=SPIKE%E2%84%A2+Prime+with+Python>
-- On-hub introspection (where available) using `dir()` and `help()` on modules.
-- Comparison with **MicroPython standard library** stubs from  
-  <https://micropython-stubs.readthedocs.io>
+- **Official LEGO SPIKE Prime Python Help**  
+  <https://spike.legoeducation.com/prime/modal/help/lls-help-python>  
+- **LEGO Education Lesson Plans**  
+  <https://education.lego.com/en-au/lessons/?products=SPIKE%E2%84%A2+Prime+with+Python>  
+- On-hub introspection via `dir()` and `help()` on modules.  
+- **MicroPython standard library** documentation:  
+  <https://micropython-stubs.readthedocs.io>  
 
 ---
 
-## 5. Folder Structure  
+## 5  Folder Structure  
 
 ```
 Fluffy-Terminators-FLL/
 │
 ├── spike_stubs/
-│   ├── __init__.pyi
 │   ├── app.pyi
 │   ├── color.pyi
 │   ├── color_matrix.pyi
-│   ├── color_sensor.pyi
 │   ├── device.pyi
-│   ├── distance_sensor.pyi
-│   ├── force_sensor.pyi
 │   ├── hub.pyi
-│   ├── light.pyi
 │   ├── motor.pyi
 │   ├── motor_pair.pyi
-│   ├── runloop.pyi
-│   ├── speaker.pyi
-│   ├── status_light.pyi
 │   ├── time.pyi
 │   ├── utime.pyi
 │   ├── ujson.pyi
@@ -93,51 +82,124 @@ Fluffy-Terminators-FLL/
 │   ├── urandom.pyi
 │   ├── ustruct.pyi
 │   ├── wait.pyi
-│   └── (other MicroPython shims)
-└── .vscode/settings.json  ←  adds “spike_stubs” to `python.analysis.extraPaths`
+│   └── …
+└── .vscode/settings.json
 ```
 
 ---
 
-## 6. Usage in VS Code  
+## 6  VS Code Integration with Peter Staev’s Extension  
+
+### 6.1  Install  
+
+Search **“LEGO SPIKE Prime / Mindstorms VS Code Extension”** by **Peter Staev** in the Marketplace,  
+or install manually:
+
+```bash
+code --install-extension PeterStaev.lego-spikeprime-mindstorms-vscode
+```
+
+🔗 GitHub: [https://github.com/PeterStaev/lego-spikeprime-mindstorms-vscode](https://github.com/PeterStaev/lego-spikeprime-mindstorms-vscode)
+
+The extension enables:
+
+- Direct Bluetooth or USB upload.  
+- “Upload and Run on Hub” and “Stop Program” commands.  
+- Serial log output from the hub.  
+
+---
+
+### 6.2  Project Setup  
+
+Use the following VS Code settings:
 
 ```jsonc
-// .vscode/settings.json
 {
-  "python.analysis.extraPaths": [
-    "./spike_stubs"
-  ],
-  "python.analysis.autoSearchPaths": false,
+  // --- Python analysis ---
+  "python.languageServer": "Pylance",
   "python.analysis.typeCheckingMode": "basic",
-  "python.languageServer": "Pylance"
+
+  // Tell Pylance where your *.pyi stubs live:
+  "python.analysis.stubPath": "./spike_stubs",
+
+  // Include them for import resolution:
+  "python.analysis.extraPaths": ["./spike_stubs"],
+
+  // Silence “no module source” warnings for stub-only modules:
+  "python.analysis.diagnosticSeverityOverrides": {
+    "reportMissingModuleSource": "none"
+  },
+
+  // --- LEGO SPIKE extension settings ---
+  "legoSpikePrime.hubType": "SPIKE3",     // or "SPIKE2", "Inventor"
+  "legoSpikePrime.uploadMethod": "BLE",   // or "USB"
+  "legoSpikePrime.pythonFilePattern": "**/*.py",
+  "legoSpikePrime.autoConnect": true      // Auto-connect on VS Code start
 }
 ```
 
-Reload VS Code and IntelliSense will recognize `import motor`, `from hub import port`, etc., with hover documentation drawn from these stubs.
+**Explanation:**
+
+- `stubPath` and `extraPaths` make Pylance aware of your stubs.  
+- `diagnosticSeverityOverrides` hides spurious missing-module warnings.  
+- `legoSpikePrime.*` entries configure the upload method and hub type.
 
 ---
 
-## 7. Alternative and Future Sources  
+### 6.3  Using the Extension  
 
-While these custom stubs were necessary for SPIKE 3’s undocumented API, developers may also use:
-
-- **[pyhub-stubs](https://github.com/XenseEducation/pyhub-stubs)** – official SPIKE 2/Mindstorms stubs.
-- **[SPIKEPythonDocs](https://github.com/tuftsceeo/SPIKEPythonDocs)** – auto-generated HTML reference.
-- **[MicroPython-Stubs](https://micropython-stubs.readthedocs.io)** – for standard library coverage.
-
-Future work could merge these sources to create a more authoritative, single-source stub distribution for SPIKE 3.
+1. Connect your SPIKE hub via USB or Bluetooth.  
+2. Open your `.py` file and press `Ctrl + Shift + P` →  
+   **SPIKE Prime: Upload and Run on Hub**.  
+3. The extension handles uploading and automatically executes the program.  
+4. Use **SPIKE Prime: Stop Program** or **SPIKE Prime: Show Logs** for debugging output.
 
 ---
 
-## 8. Outcome  
+## 7  Using the `# LEGO slot:X autostart` Directive  
 
-By v12:
+> **Important:** This feature is **provided by the VS Code extension**, not by the SPIKE firmware itself.
 
-- All modules compile cleanly under Pylance.  
-- Every SPIKE API symbol has a stub and a docstring.  
-- IntelliSense and hover help match official behavior.  
-- MicroPython-standard modules are included to avoid import errors.  
+You can control where and how your Python file is uploaded using a special comment header recognized by the **Peter Staev extension**:
 
-These stubs now provide a **complete offline development environment** for SPIKE Prime Python programs on macOS/VS Code.
+```python
+# LEGO slot:1 autostart
+
+from hub import light_matrix
+light_matrix.write("Hi!")
+```
+
+**Explanation:**
+
+- `slot:1` → tells the extension to upload this file to **hub slot 1**.
+- `autostart` → instructs the extension to **run the program immediately after upload**.  
+- These directives are **parsed by the extension** before upload; they have **no effect** if you deploy code using the official LEGO Education app or other methods.
+
+This is useful in competition or classroom environments for one-command *upload + run* behavior directly from VS Code.
+
+For full documentation, see the extension README:  
+<https://github.com/PeterStaev/lego-spikeprime-mindstorms-vscode#automatic-uploadstart-of-a-python-file>
+
+---
+
+## 8  Alternative Stub Sources  
+
+| Source | Purpose | Use Case |
+|:--|:--|:--|
+| [pyhub-stubs](https://github.com/XenseEducation/pyhub-stubs) | SPIKE 2 / Mindstorms API coverage | Legacy projects |
+| [SPIKEPythonDocs](https://github.com/tuftsceeo/SPIKEPythonDocs) | Full HTML reference | Docstring verification |
+| [MicroPython-Stubs](https://micropython-stubs.readthedocs.io) | Standard library coverage | `u*` modules and `time` |
+
+---
+
+## 9  Outcome  
+
+By **v12**, combined with the VS Code extension:
+
+- All SPIKE 3 modules load cleanly under Pylance.  
+- IntelliSense and hover help provide full documentation.  
+- Upload and execution work directly from VS Code.  
+- `# LEGO slot:X autostart` simplifies deployment control.  
+- The setup is fully cross-platform (macOS, Windows, Linux).  
 
 ---
