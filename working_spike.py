@@ -5,7 +5,7 @@ import motor
 import motor_pair
 import utime
 from hub import port, motion_sensor, button
-from math import copysign, exp
+import math.copysign
 
 
 def wait_until(pred, timeout=None, poll_ms=10):
@@ -399,17 +399,19 @@ def Anneuryysm_3_main():
 
 
 def WillemDafoe_4_main():
-    GAIN = 0.2
+    GAIN = 2
     print("willy")
 
-    gyro_follow(heading=0, gain=GAIN, speed=10, distance=100)
-    gyro_follow(heading=0, gain=GAIN, speed=35, distance=978)
-    gyro_turn(heading=8, speed=18)
-    gyro_follow(heading=8, gain=GAIN, speed=27, distance=430)
-    gyro_follow(heading=4, gain=-GAIN, speed=-18, distance=-80)
-    gyro_follow(heading=0, gain=-GAIN, speed=-18, distance=-200)
-    gyro_follow(heading=0, gain=GAIN, speed=18, distance=140)
-    gyro_turn(heading=-10, speed=4)
+    gyro_follow(heading=0, gain=GAIN, speed=10, distance=100) #slow start
+    gyro_follow(heading=0, gain=GAIN, speed=35, distance=978) #continue
+    gyro_turn(heading=9, speed=18) #turn 
+    gyro_follow(heading=8, gain=GAIN, speed=27, distance=430) #forward to do all the stuff
+    gyro_follow(heading=4, gain=-GAIN, speed=-18, distance=-300) #back maybe
+    gyro_turn(heading=0, speed=8) #recenter
+    gyro_follow(heading=0, gain=-GAIN, speed=-18, distance=-350) #back more i think
+    gyro_turn(heading=8, speed=12) #turn to brush
+    gyro_follow(heading=8, gain=GAIN, speed=18, distance=80) #forard for brush
+    gyro_turn(heading=-10, speed=4) #hook brush turn
 
     motor.run_for_degrees(LEFT_ACTUATOR, -250, 200)
     utime.sleep_ms(500)
@@ -468,4 +470,4 @@ def Mercy_Dash():
 
 if __name__ == "__main__":
     init()
-    Anneuryysm_3_main()
+    Taretare_Sauce_1_main()
