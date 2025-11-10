@@ -81,8 +81,9 @@ def init():
     motor.reset_relative_position(LEFT, 0)
     motor.reset_relative_position(RIGHT_ACTUATOR, 0)
     motor.reset_relative_position(LEFT_ACTUATOR, 0)
+    utime.sleep_ms(500)
     motion_sensor.reset_yaw(0)
-    utime.sleep_ms(400)
+    utime.sleep_ms(500)
 
 
 def pct_to_dps(pct):
