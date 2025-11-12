@@ -404,28 +404,19 @@ def WillemDafoe_4_main():
     print("willy")
 
     gyro_follow(heading=0, gain=GAIN, speed=10, distance=100) #slow start
-    gyro_follow(heading=0, gain=GAIN, speed=35, distance=978) #continue
-    gyro_turn(heading=9, speed=18) #turn 
-    gyro_follow(heading=8, gain=GAIN, speed=27, distance=430) #forward to do all the stuff
-    gyro_follow(heading=4, gain=-GAIN, speed=-18, distance=-200) #back maybe
+    gyro_follow(heading=0, gain=GAIN, speed=35, distance=978) #forward
+    gyro_turn(heading=9, speed=18) #align with mission 2
+    gyro_follow(heading=8, gain=GAIN, speed=27, distance=430) #forward to activate mission 2
+    gyro_follow(heading=4, gain=-GAIN, speed=-18, distance=-200) #reverse
     gyro_turn(heading=0, speed=8) #recenter
-    gyro_follow(heading=0, gain=-GAIN, speed=-18, distance=-120) #back more i think
+    gyro_follow(heading=0, gain=-GAIN, speed=-18, distance=-120) #reverse to mission 1
     gyro_turn(heading=8, speed=12) #turn to brush
-    gyro_follow(heading=8, gain=GAIN, speed=18, distance=80) #forard for brush
-    gyro_turn(heading=-10, speed=2) #hook brush turn
+    gyro_follow(heading=8, gain=GAIN, speed=18, distance=80) #forward 
+    gyro_turn(heading=-10, speed=2) #turn to hook brush
 
-    motor.run_for_degrees(LEFT_ACTUATOR, -250, 200)
+    motor.run_for_degrees(LEFT_ACTUATOR, -250, 200) #lift brush
     utime.sleep_ms(500)
-
-    gyro_follow(
-        heading=0,
-        gain=-GAIN,
-        speed=-27,
-        distance=0,
-        condition=lambda: (color_sensor.color(COLOUR_SENSOR)) == color.GREEN,
-    )
-
-    motor.run_for_degrees(RIGHT_ACTUATOR, 300, 200)
+    gyro_follow(heading=0, gain=-GAIN, speed=-27, distance=None, condition=lambda: (color_sensor.color(COLOUR_SENSOR)) == color.GREEN,) #reverse until hit wall
     utime.sleep_ms(1000)
 
 
