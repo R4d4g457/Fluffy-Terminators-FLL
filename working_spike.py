@@ -1,4 +1,4 @@
-# LEGO slot:1 autostart
+# LEGO slot:8 autostart
 import color
 import color_sensor
 import motor
@@ -81,8 +81,9 @@ def init():
     motor.reset_relative_position(LEFT, 0)
     motor.reset_relative_position(RIGHT_ACTUATOR, 0)
     motor.reset_relative_position(LEFT_ACTUATOR, 0)
+    utime.sleep_ms(500)
     motion_sensor.reset_yaw(0)
-    utime.sleep_ms(400)
+    utime.sleep_ms(500)
 
 
 def pct_to_dps(pct):
@@ -429,7 +430,9 @@ def WillemDafoe_4_main():
 
 
 def Feetpics_5_main():
-    pass
+    gain = 0.2
+    gyro_follow(heading=0, gain=gain, speed=75, distance=1100)
+    gyro_follow(heading=0, gain=-gain, speed=-75, distance=-1050)
 
 
 def Zaza_6_main():
@@ -442,25 +445,34 @@ def Zaza_6_main():
     # Travel
     gyro_turn(heading=75, speed=15)
     utime.sleep_ms(100)
-    gyro_follow(heading=75, gain=GAIN, speed=20, distance=450)
+    gyro_follow(heading=75, gain=GAIN, speed=30, distance=400)
     utime.sleep_ms(100)
     gyro_turn(heading=0, speed=-15)
     gyro_follow(
         heading=0,
         gain=GAIN,
         speed=27,
-        distance=None,
-        condition=lambda: color_sensor.color(COLOUR_SENSOR) == color.WHITE,
+        distance=625,
     )
-    wait_until(lambda: color_sensor.color(COLOUR_SENSOR) == color.BLACK)
-    motor_pair.stop
 
     # Raise Crane
     gyro_turn(heading=-85, speed=10)
     utime.sleep_ms(100)
-    gyro_follow(heading=-85, gain=GAIN, speed=27, distance=295)
-    motor.run_for_degrees(LEFT_ACTUATOR, -1800, -200)
-    utime.sleep_ms(2000)
+    gyro_follow(heading=-85, gain=GAIN, speed=27, distance=253)
+    gyro_turn(heading=-85, speed=10)
+    motor.run_for_degrees(LEFT_ACTUATOR, -800, -200)
+    utime.sleep_ms(2500)
+
+    gyro_follow(heading=-90, gain=-GAIN, speed=-27, distance=-170)
+    gyro_turn(heading=180, speed=15)
+    gyro_follow(heading=180, gain=GAIN, speed=40, distance=475)
+    gyro_turn(heading=-90, speed=15)
+    gyro_follow(heading=-90, gain=GAIN, speed=27, distance=100)
+    gyro_turn(heading=0, speed=15)
+    gyro_follow(heading=0, gain=GAIN, speed=40, distance=250)
+    gyro_follow(heading=0, gain=-GAIN, speed=-27, distance=-25)
+    motor.run_for_degrees(RIGHT_ACTUATOR, 90, 120)
+    gyro_follow(heading=-10, gain=-GAIN, speed=-27, distance=-400)
     print("done")
 
 
@@ -470,4 +482,4 @@ def Mercy_Dash():
 
 if __name__ == "__main__":
     init()
-    Taretare_Sauce_1_main()
+    Mercy_Dash()
