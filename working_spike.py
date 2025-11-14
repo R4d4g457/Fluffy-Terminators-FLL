@@ -1,4 +1,4 @@
-# LEGO slot:8 autostart
+# LEGO slot:4 autostart
 import color
 import color_sensor
 import motor
@@ -319,7 +319,10 @@ def Stonks_2_main():
 
 
 def Anneuryysm_3_main():
-    GAIN = 0.2
+    GAIN = 2
+    motor.reset_relative_position(RIGHT_ACTUATOR, 0)
+    motor.reset_relative_position(LEFT_ACTUATOR, 0)
+    
     # Travel
     gyro_follow(heading=0, gain=GAIN, speed=40, distance=620)
     gyro_turn(heading=33, speed=12)
@@ -353,6 +356,7 @@ def Anneuryysm_3_main():
     gyro_follow(heading=90, gain=GAIN, speed=50, distance=580)
 
     # Collect sample
+
     gyro_turn(heading=0, speed=20)
     gyro_follow(heading=0, gain=GAIN, speed=50, distance=200)
     motor.run_for_degrees(LEFT_ACTUATOR, 180, 360)
@@ -360,6 +364,7 @@ def Anneuryysm_3_main():
     motor.run_for_degrees(LEFT_ACTUATOR, 360, 360)
 
     # Travel
+
     gyro_turn(heading=90, speed=20)
     gyro_follow(heading=90, gain=GAIN, speed=50, distance=600)
     gyro_turn(heading=45, speed=20)
@@ -375,27 +380,22 @@ def Anneuryysm_3_main():
     motor.run_for_degrees(RIGHT_ACTUATOR, -400, 360)
     utime.sleep_ms(2000)
     gyro_follow(heading=0, gain=-GAIN, speed=-50, distance=-150)
-
-    # Travel
     gyro_turn(heading=45, speed=20)
     gyro_follow(heading=45, gain=GAIN, speed=50, distance=1100)
     gyro_turn(heading=-50, speed=20)
-
-    # Lift Minecart
     motor.run_for_degrees(RIGHT_ACTUATOR, 400, 360)
     utime.sleep_ms(200)
     gyro_follow(heading=-50, gain=GAIN, speed=50, distance=500)
     motor.run_for_degrees(RIGHT_ACTUATOR, -400, 360)
     utime.sleep_ms(2000)
-
-    # Return to Red Home
     gyro_follow(heading=-50, gain=-GAIN, speed=-50, distance=-800)
     gyro_follow(
         heading=0,
         gain=-GAIN,
         speed=-75,
         distance=None,
-        condition=lambda: color_sensor.color(COLOUR_SENSOR) == color.GREEN,
+        condition=lambda: color_sensor.color(COLOUR_SENSOR) == color.GREEN
+        or color_sensor.color(COLOUR_SENSOR) == color.RED,
     )
 
 
@@ -480,4 +480,4 @@ def Mercy_Dash():
 
 if __name__ == "__main__":
     init()
-    Mercy_Dash()
+    Anneuryysm_3_main()
