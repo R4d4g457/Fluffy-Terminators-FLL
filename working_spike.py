@@ -1,4 +1,4 @@
-# LEGO slot:1 autostart
+# LEGO slot:3 autostart
 import color
 import color_sensor
 import motor
@@ -305,8 +305,8 @@ def Stonks_2_main():
     # Turn to align with silo
     gyro_turn(heading=-12, speed=15)
 
-    # Push Silo lever 4 times
-    for i in range(4):
+    # Push Silo lever 5 times
+    for i in range(5):
         motor.run_for_degrees(RIGHT_ACTUATOR, 560, 350)
         utime.sleep_ms(750)
         motor.run_for_degrees(RIGHT_ACTUATOR, -560, 350)
@@ -486,4 +486,4 @@ def Mercy_Dash():
 
 if __name__ == "__main__":
     init()
-    Taretare_Sauce_1_main()
+    Stonks_2_main()
