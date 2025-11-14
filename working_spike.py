@@ -1,4 +1,4 @@
-# LEGO slot:7 autostart
+# LEGO slot:1 autostart
 import color
 import color_sensor
 import motor
@@ -238,12 +238,11 @@ def gyro_follow(heading, gain=0.2, speed=30, distance=None, condition=None):
 def Taretare_Sauce_1_main():
     GAIN = 0.19
 
-    # Travel to & Turn parallel with Forge
     gyro_follow(heading=0, gain=GAIN, speed=45, distance=1450)
     gyro_turn(heading=41, speed=15)
-    gyro_follow(heading=41, gain=-GAIN, speed=-30, distance=-75)
+    gyro_follow(heading=41, gain=-GAIN, speed=-30, distance=-50)
 
-    # Pick up Millstone
+    motor.reset_relative_position(RIGHT_ACTUATOR, 0)
     utime.sleep_ms(100)
     motor.run_for_degrees(RIGHT_ACTUATOR, 1800, 1100)
     utime.sleep_ms(1250)
@@ -292,7 +291,6 @@ def Taretare_Sauce_1_main():
     motor.run_for_degrees(LEFT_ACTUATOR, -140, 150)
     utime.sleep_ms(750)
 
-    # Return to Blue Home
     gyro_turn(heading=87, speed=25)
     gyro_follow(heading=87, gain=-GAIN, speed=-30, distance=-900)
     gyro_turn(heading=25, speed=20)
@@ -488,4 +486,4 @@ def Mercy_Dash():
 
 if __name__ == "__main__":
     init()
-    Zaza_6_main()
+    Taretare_Sauce_1_main()
