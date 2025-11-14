@@ -405,7 +405,7 @@ def WillemDafoe_4_main():
 
     gyro_follow(heading=0, gain=GAIN, speed=10, distance=100) #slow start
     gyro_follow(heading=0, gain=GAIN, speed=35, distance=978) #forward
-    gyro_turn(heading=9, speed=18) #align with mission 2
+    gyro_turn(heading=10, speed=18) #align with mission 2
     gyro_follow(heading=8, gain=GAIN, speed=27, distance=430) #forward to activate mission 2
     gyro_follow(heading=4, gain=-GAIN, speed=-18, distance=-200) #reverse
     gyro_turn(heading=0, speed=8) #recenter
