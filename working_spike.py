@@ -1,4 +1,4 @@
-# LEGO slot:8 autostart
+# LEGO slot:3 autostart
 import color
 import color_sensor
 import motor
@@ -238,12 +238,11 @@ def gyro_follow(heading, gain=0.2, speed=30, distance=None, condition=None):
 def Taretare_Sauce_1_main():
     GAIN = 0.19
 
-    # Travel to & Turn parallel with Forge
     gyro_follow(heading=0, gain=GAIN, speed=45, distance=1450)
     gyro_turn(heading=41, speed=15)
-    gyro_follow(heading=41, gain=-GAIN, speed=-30, distance=-75)
+    gyro_follow(heading=41, gain=-GAIN, speed=-30, distance=-50)
 
-    # Pick up Millstone
+    motor.reset_relative_position(RIGHT_ACTUATOR, 0)
     utime.sleep_ms(100)
     motor.run_for_degrees(RIGHT_ACTUATOR, 1800, 1100)
     utime.sleep_ms(1250)
@@ -292,7 +291,6 @@ def Taretare_Sauce_1_main():
     motor.run_for_degrees(LEFT_ACTUATOR, -140, 150)
     utime.sleep_ms(750)
 
-    # Return to Blue Home
     gyro_turn(heading=87, speed=25)
     gyro_follow(heading=87, gain=-GAIN, speed=-30, distance=-900)
     gyro_turn(heading=25, speed=20)
@@ -307,8 +305,8 @@ def Stonks_2_main():
     # Turn to align with silo
     gyro_turn(heading=-12, speed=15)
 
-    # Push Silo lever 4 times
-    for i in range(4):
+    # Push Silo lever 5 times
+    for i in range(5):
         motor.run_for_degrees(RIGHT_ACTUATOR, 560, 350)
         utime.sleep_ms(750)
         motor.run_for_degrees(RIGHT_ACTUATOR, -560, 350)
@@ -319,7 +317,10 @@ def Stonks_2_main():
 
 
 def Anneuryysm_3_main():
-    GAIN = 0.2
+    GAIN = 2
+    motor.reset_relative_position(RIGHT_ACTUATOR, 0)
+    motor.reset_relative_position(LEFT_ACTUATOR, 0)
+
     # Travel
     gyro_follow(heading=0, gain=GAIN, speed=40, distance=620)
     gyro_turn(heading=33, speed=12)
@@ -353,6 +354,7 @@ def Anneuryysm_3_main():
     gyro_follow(heading=90, gain=GAIN, speed=50, distance=580)
 
     # Collect sample
+
     gyro_turn(heading=0, speed=20)
     gyro_follow(heading=0, gain=GAIN, speed=50, distance=200)
     motor.run_for_degrees(LEFT_ACTUATOR, 180, 360)
@@ -360,6 +362,7 @@ def Anneuryysm_3_main():
     motor.run_for_degrees(LEFT_ACTUATOR, 360, 360)
 
     # Travel
+
     gyro_turn(heading=90, speed=20)
     gyro_follow(heading=90, gain=GAIN, speed=50, distance=600)
     gyro_turn(heading=45, speed=20)
@@ -375,27 +378,22 @@ def Anneuryysm_3_main():
     motor.run_for_degrees(RIGHT_ACTUATOR, -400, 360)
     utime.sleep_ms(2000)
     gyro_follow(heading=0, gain=-GAIN, speed=-50, distance=-150)
-
-    # Travel
     gyro_turn(heading=45, speed=20)
     gyro_follow(heading=45, gain=GAIN, speed=50, distance=1100)
     gyro_turn(heading=-50, speed=20)
-
-    # Lift Minecart
     motor.run_for_degrees(RIGHT_ACTUATOR, 400, 360)
     utime.sleep_ms(200)
     gyro_follow(heading=-50, gain=GAIN, speed=50, distance=500)
     motor.run_for_degrees(RIGHT_ACTUATOR, -400, 360)
     utime.sleep_ms(2000)
-
-    # Return to Red Home
     gyro_follow(heading=-50, gain=-GAIN, speed=-50, distance=-800)
     gyro_follow(
         heading=0,
         gain=-GAIN,
         speed=-75,
         distance=None,
-        condition=lambda: color_sensor.color(COLOUR_SENSOR) == color.GREEN,
+        condition=lambda: color_sensor.color(COLOUR_SENSOR) == color.GREEN
+        or color_sensor.color(COLOUR_SENSOR) == color.RED,
     )
 
 
@@ -405,7 +403,7 @@ def WillemDafoe_4_main():
 
     gyro_follow(heading=0, gain=GAIN, speed=10, distance=100) #slow start
     gyro_follow(heading=0, gain=GAIN, speed=35, distance=978) #forward
-    gyro_turn(heading=10, speed=18) #align with mission 2
+    gyro_turn(heading=9, speed=18) #align with mission 2
     gyro_follow(heading=8, gain=GAIN, speed=27, distance=430) #forward to activate mission 2
     gyro_follow(heading=4, gain=-GAIN, speed=-18, distance=-200) #reverse
     gyro_turn(heading=0, speed=8) #recenter
@@ -414,9 +412,15 @@ def WillemDafoe_4_main():
     gyro_follow(heading=8, gain=GAIN, speed=18, distance=80) #forward 
     gyro_turn(heading=-10, speed=2) #turn to hook brush
 
-    motor.run_for_degrees(LEFT_ACTUATOR, -250, 200) #lift brush
+    motor.run_for_degrees(LEFT_ACTUATOR, -250, 200)  # lift brush
     utime.sleep_ms(500)
-    gyro_follow(heading=0, gain=-GAIN, speed=-27, distance=None, condition=lambda: (color_sensor.color(COLOUR_SENSOR)) == color.GREEN,) #reverse until hit wall
+    gyro_follow(
+        heading=0,
+        gain=-GAIN,
+        speed=-27,
+        distance=None,
+        condition=lambda: (color_sensor.color(COLOUR_SENSOR)) == color.GREEN,
+    )  # reverse until hit wall
     utime.sleep_ms(1000)
 
 
@@ -427,43 +431,50 @@ def Feetpics_5_main():
 
 
 def Zaza_6_main():
-    GAIN = 0.2
+    GAIN = 2
 
     # Uncover Boat
-    gyro_follow(heading=0, gain=GAIN, speed=40, distance=810)
+    gyro_follow(heading=-1, gain=GAIN, speed=30, distance=820)
+    utime.sleep_ms(200)
     gyro_follow(heading=0, gain=-GAIN, speed=-25, distance=-100)
 
-    # Travel
+    # Raise Boat
     gyro_turn(heading=75, speed=15)
     utime.sleep_ms(100)
-    gyro_follow(heading=75, gain=GAIN, speed=30, distance=400)
-    utime.sleep_ms(100)
-    gyro_turn(heading=0, speed=-15)
-    gyro_follow(
-        heading=0,
-        gain=GAIN,
-        speed=27,
-        distance=625,
-    )
-
-    # Raise Crane
-    gyro_turn(heading=-85, speed=10)
-    utime.sleep_ms(100)
-    gyro_follow(heading=-85, gain=GAIN, speed=27, distance=253)
-    gyro_turn(heading=-85, speed=10)
-    motor.run_for_degrees(LEFT_ACTUATOR, -800, -200)
-    utime.sleep_ms(2500)
-
-    gyro_follow(heading=-90, gain=-GAIN, speed=-27, distance=-170)
-    gyro_turn(heading=180, speed=15)
-    gyro_follow(heading=180, gain=GAIN, speed=40, distance=475)
-    gyro_turn(heading=-90, speed=15)
-    gyro_follow(heading=-90, gain=GAIN, speed=27, distance=100)
+    gyro_follow(heading=75, gain=GAIN, speed=30, distance=210)
     gyro_turn(heading=0, speed=15)
-    gyro_follow(heading=0, gain=GAIN, speed=40, distance=250)
-    gyro_follow(heading=0, gain=-GAIN, speed=-27, distance=-25)
-    motor.run_for_degrees(RIGHT_ACTUATOR, 90, 120)
-    gyro_follow(heading=-10, gain=-GAIN, speed=-27, distance=-400)
+    gyro_follow(heading=0, gain=GAIN, speed=30, distance=300)
+    utime.sleep_ms(100)
+
+    # Drop Flag
+    motor.run_for_degrees(RIGHT_ACTUATOR, 120, 100)
+    utime.sleep_ms(1500)
+    motor.run_for_degrees(RIGHT_ACTUATOR, -120, 100)
+    utime.sleep_ms(500)
+
+    gyro_follow(heading=10, gain=-GAIN, speed=-100, distance=-1000)
+
+    # gyro_turn(heading=0, speed=-15)
+    # gyro_follow(heading=0, gain=GAIN, speed=27, distance=625)
+
+    # # Raise Crane
+    # gyro_turn(heading=-85, speed=10)
+    # utime.sleep_ms(100)
+    # gyro_follow(heading=-85, gain=GAIN, speed=27, distance=253)
+    # gyro_turn(heading=-85, speed=10)
+    # motor.run_for_degrees(LEFT_ACTUATOR, -800, -200)
+    # utime.sleep_ms(2500)
+
+    # gyro_follow(heading=-90, gain=-GAIN, speed=-27, distance=-170)
+    # gyro_turn(heading=180, speed=15)
+    # gyro_follow(heading=180, gain=GAIN, speed=40, distance=475)
+    # gyro_turn(heading=-90, speed=15)
+    # gyro_follow(heading=-90, gain=GAIN, speed=27, distance=100)
+    # gyro_turn(heading=0, speed=15)
+    # gyro_follow(heading=0, gain=GAIN, speed=40, distance=250)
+    # gyro_follow(heading=0, gain=-GAIN, speed=-27, distance=-25)
+    # motor.run_for_degrees(RIGHT_ACTUATOR, 90, 120)
+    # gyro_follow(heading=-10, gain=-GAIN, speed=-27, distance=-400)
     print("done")
 
 
@@ -473,4 +484,4 @@ def Mercy_Dash():
 
 if __name__ == "__main__":
     init()
-    WillemDafoe_4_main()
+    Stonks_2_main()
