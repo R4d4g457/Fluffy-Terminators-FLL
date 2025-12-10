@@ -1,4 +1,4 @@
-# LEGO slot:3 autostart
+# LEGO slot:1 autostart
 import color
 import color_sensor
 import motor
@@ -81,9 +81,9 @@ def init():
     motor.reset_relative_position(LEFT, 0)
     motor.reset_relative_position(RIGHT_ACTUATOR, 0)
     motor.reset_relative_position(LEFT_ACTUATOR, 0)
-    utime.sleep_ms(500)
+    utime.sleep_ms(250)
     motion_sensor.reset_yaw(0)
-    utime.sleep_ms(500)
+    utime.sleep_ms(300)
 
 
 def pct_to_dps(pct):
@@ -235,23 +235,23 @@ def gyro_follow(heading, gain=0.2, speed=30, distance=None, condition=None):
 # ---------------- missions ----------------
 
 
-def Taretare_Sauce_1_main():
+def Run_1_Rock():
     GAIN = 0.19
 
-    gyro_follow(heading=0, gain=GAIN, speed=45, distance=1450)
+    gyro_follow(heading=0, gain=GAIN, speed=50, distance=1455)
     gyro_turn(heading=41, speed=15)
-    gyro_follow(heading=41, gain=-GAIN, speed=-30, distance=-50)
+    gyro_follow(heading=41, gain=-GAIN, speed=-30, distance=-25)
 
     motor.reset_relative_position(RIGHT_ACTUATOR, 0)
     utime.sleep_ms(100)
     motor.run_for_degrees(RIGHT_ACTUATOR, 1800, 1100)
-    utime.sleep_ms(1250)
+    utime.sleep_ms(1400)
     motor.run_for_degrees(RIGHT_ACTUATOR, -1000, 1100)
-    utime.sleep_ms(1100)
+    utime.sleep_ms(1000)
 
     utime.sleep_ms(100)
-    gyro_turn(heading=30, speed=-10)
-    gyro_follow(heading=30, gain=GAIN, speed=30, distance=120)
+    gyro_turn(heading=25, speed=-10)
+    gyro_follow(heading=25, gain=GAIN, speed=30, distance=20)
 
     # Loose Forge
     gyro_turn(heading=-15, speed=15)
@@ -261,12 +261,12 @@ def Taretare_Sauce_1_main():
 
     # Push Rocks
     gyro_turn(heading=-86, speed=15)
-    gyro_follow(heading=-86, gain=GAIN, speed=30, distance=600)
-    gyro_follow(heading=-90, gain=-GAIN, speed=-30, distance=-500)
+    gyro_follow(heading=-86, gain=GAIN, speed=50, distance=600)
+    gyro_follow(heading=-90, gain=-GAIN, speed=-35, distance=-500)
 
     # Scoring Scale
     gyro_turn(heading=-135, speed=15)
-    gyro_follow(heading=-135, gain=-GAIN, speed=-30, distance=-190)
+    gyro_follow(heading=-135, gain=-GAIN, speed=-45, distance=-190)
     gyro_turn(heading=-90, speed=15)
 
     # Travel
@@ -291,85 +291,98 @@ def Taretare_Sauce_1_main():
     motor.run_for_degrees(LEFT_ACTUATOR, -140, 150)
     utime.sleep_ms(750)
 
+    motor.run_to_absolute_position(LEFT_ACTUATOR, 0, 300)
+    motor.run_to_absolute_position(RIGHT_ACTUATOR, 0, 300)
     gyro_turn(heading=87, speed=25)
-    gyro_follow(heading=87, gain=-GAIN, speed=-30, distance=-900)
-    gyro_turn(heading=25, speed=20)
+    gyro_follow(heading=87, gain=-GAIN, speed=-70, distance=-800)
+    gyro_turn(heading=25, speed=50)
     gyro_follow(heading=25, gain=-GAIN, speed=-100, distance=-1450)
+    utime.sleep(10)
 
 
-def Stonks_2_main():
-
+def Run_2_Silo():
+    motor.run_to_absolute_position(LEFT_ACTUATOR, 0, 300)
+    motor.run_to_absolute_position(RIGHT_ACTUATOR, 0, 300)
     # Travel
     gyro_follow(heading=0, gain=0.2, speed=35, distance=815)
 
     # Turn to align with silo
-    gyro_turn(heading=-12, speed=15)
+    gyro_turn(heading=-13, speed=15)
 
     # Push Silo lever 5 times
     for i in range(5):
-        motor.run_for_degrees(RIGHT_ACTUATOR, 560, 350)
-        utime.sleep_ms(750)
-        motor.run_for_degrees(RIGHT_ACTUATOR, -560, 350)
-        utime.sleep_ms(750)
+        motor.run_for_degrees(RIGHT_ACTUATOR, 580, 450)
+        utime.sleep_ms(800)
+        motor.run_for_degrees(RIGHT_ACTUATOR, -580, 375)
+        utime.sleep_ms(1000)
 
+    motor.run_to_absolute_position(LEFT_ACTUATOR, 0, 300)
+    motor.run_to_absolute_position(RIGHT_ACTUATOR, 0, 300)
     # Return to Blue Home
+    gyro_turn(heading=15)
     gyro_follow(heading=15, gain=-0.2, speed=-60, distance=-850)
 
+    utime.sleep(10)
 
-def Anneuryysm_3_main():
+
+def Run_3_Travel():
     GAIN = 2
+    motor.run_to_absolute_position(RIGHT_ACTUATOR, 0, 1000)
+    motor.run_to_absolute_position(LEFT_ACTUATOR, 0, 1000)
+
+    utime.sleep_ms(300)
     motor.reset_relative_position(RIGHT_ACTUATOR, 0)
     motor.reset_relative_position(LEFT_ACTUATOR, 0)
 
     # Travel
-    gyro_follow(heading=0, gain=GAIN, speed=40, distance=620)
-    gyro_turn(heading=33, speed=12)
-    gyro_follow(heading=33, gain=GAIN, speed=40, distance=280)
+    gyro_follow(heading=0, gain=GAIN, speed=50, distance=620)
+    gyro_turn(heading=33)
+    gyro_follow(heading=33, gain=GAIN, speed=45, distance=280)
 
     # Score Market
-    gyro_turn(heading=120, speed=12)
-    gyro_follow(heading=120, gain=GAIN, speed=40, distance=375)
-    gyro_turn(heading=125, speed=12)
+    gyro_turn(heading=125)
+    gyro_follow(heading=125, gain=GAIN, speed=40, distance=280)
+    gyro_turn(heading=125)
 
     # Travel
     gyro_follow(heading=125, gain=-GAIN, speed=-55, distance=-100)
-    gyro_turn(heading=150, speed=20)
+    gyro_turn(heading=150)
     gyro_follow(heading=150, gain=GAIN, speed=55, distance=100)
-    gyro_turn(heading=45, speed=20)
+    gyro_turn(heading=42)
 
     # Score Roof
-    gyro_follow(heading=45, gain=GAIN, speed=55, distance=75)
+    gyro_follow(heading=42, gain=GAIN, speed=55, distance=50)
     motor.run_for_degrees(RIGHT_ACTUATOR, 400, 360)
     utime.sleep_ms(1500)
-    gyro_follow(heading=45, gain=-GAIN, speed=-50, distance=-350)
-    gyro_follow(heading=45, gain=GAIN, speed=50, distance=200)
+    gyro_follow(heading=42, gain=-GAIN, speed=-50, distance=-350)
+    gyro_follow(heading=42, gain=GAIN, speed=50, distance=100)
     motor.run_for_degrees(RIGHT_ACTUATOR, -400, 360)
-    utime.sleep_ms(500)
-    gyro_follow(heading=45, gain=-GAIN, speed=-50, distance=-200)
+    utime.sleep_ms(250)
+    gyro_follow(heading=42, gain=-GAIN, speed=-50, distance=-200)
 
     # Travel
-    gyro_turn(heading=90, speed=20)
+    gyro_turn(heading=90)
     motor.run_for_degrees(LEFT_ACTUATOR, -540, 360)
     utime.sleep_ms(200)
-    gyro_follow(heading=90, gain=GAIN, speed=50, distance=580)
+    gyro_follow(heading=90, gain=GAIN, speed=50, distance=650)
 
     # Collect sample
-
-    gyro_turn(heading=0, speed=20)
+    gyro_turn(heading=0)
     gyro_follow(heading=0, gain=GAIN, speed=50, distance=200)
-    motor.run_for_degrees(LEFT_ACTUATOR, 180, 360)
-    gyro_follow(heading=0, gain=-GAIN, speed=-50, distance=-400)
+    motor.run_for_degrees(LEFT_ACTUATOR, 180, 400)
+    utime.sleep_ms(200)
+    gyro_follow(heading=0, gain=-GAIN, speed=-50, distance=-300)
     motor.run_for_degrees(LEFT_ACTUATOR, 360, 360)
 
     # Travel
 
-    gyro_turn(heading=90, speed=20)
+    gyro_turn(heading=90)
     gyro_follow(heading=90, gain=GAIN, speed=50, distance=600)
-    gyro_turn(heading=45, speed=20)
+    gyro_turn(heading=45)
     gyro_follow(heading=45, gain=GAIN, speed=50, distance=275)
-    gyro_turn(heading=90, speed=20)
+    gyro_turn(heading=90)
     gyro_follow(heading=90, gain=GAIN, speed=50, distance=400)
-    gyro_turn(heading=-40, speed=20)
+    gyro_turn(heading=-40)
 
     # Statue
     motor.run_for_degrees(RIGHT_ACTUATOR, 400, 360)
@@ -377,38 +390,48 @@ def Anneuryysm_3_main():
     gyro_turn(heading=0, speed=20)
     motor.run_for_degrees(RIGHT_ACTUATOR, -400, 360)
     utime.sleep_ms(2000)
-    gyro_follow(heading=0, gain=-GAIN, speed=-50, distance=-150)
-    gyro_turn(heading=45, speed=20)
-    gyro_follow(heading=45, gain=GAIN, speed=50, distance=1100)
-    gyro_turn(heading=-50, speed=20)
-    motor.run_for_degrees(RIGHT_ACTUATOR, 400, 360)
-    utime.sleep_ms(200)
-    gyro_follow(heading=-50, gain=GAIN, speed=50, distance=500)
-    motor.run_for_degrees(RIGHT_ACTUATOR, -400, 360)
-    utime.sleep_ms(2000)
-    gyro_follow(heading=-50, gain=-GAIN, speed=-50, distance=-800)
-    gyro_follow(
-        heading=0,
-        gain=-GAIN,
-        speed=-75,
-        distance=None,
-        condition=lambda: color_sensor.color(COLOUR_SENSOR) == color.GREEN
-        or color_sensor.color(COLOUR_SENSOR) == color.RED,
-    )
+
+    # Return Home
+    gyro_turn(heading=0, speed=40)
+    gyro_follow(heading=0, gain=GAIN, speed=50, distance=1750)
+
+    motor.run_to_absolute_position(RIGHT_ACTUATOR, 0, 1000)
+    utime.sleep_ms(300)
+
+    # gyro_follow(heading=45, gain=GAIN, speed=50, distance=1100)
+    # gyro_turn(heading=-50, speed=20)
+    # motor.run_for_degrees(RIGHT_ACTUATOR, 400, 360)
+    # utime.sleep_ms(200)
+    # gyro_follow(heading=-50, gain=GAIN, speed=50, distance=500)
+    # motor.run_for_degrees(RIGHT_ACTUATOR, -400, 360)
+    # utime.sleep_ms(2000)
+    # gyro_follow(heading=-50, gain=-GAIN, speed=-50, distance=-800)
+    # gyro_follow(
+    #     heading=0,
+    #     gain=-GAIN,
+    #     speed=-75,
+    #     distance=None,
+    #     condition=lambda: color_sensor.color(COLOUR_SENSOR) == color.GREEN
+    #     or color_sensor.color(COLOUR_SENSOR) == color.RED,
+    # )
 
 
-def WillemDafoe_4_main():
-    GAIN = 1
+def Run_6_GREEN():
+    GAIN = 2
     print("willy")
 
-    gyro_follow(heading=0, gain=GAIN, speed=50, distance=1030) #forward
-    gyro_turn(heading=9, speed=30) #align with mission 2
-    gyro_follow(heading=9 , gain=GAIN, speed=40, distance=250) #forward to activate mission 2
+    gyro_follow(heading=0, gain=GAIN, speed=50, distance=1030)  # forward
+    gyro_turn(heading=9, speed=30)  # align with mission 2
+    gyro_follow(
+        heading=9, gain=GAIN, speed=40, distance=250
+    )  # forward to activate mission 2
     motor.run_for_degrees(LEFT_ACTUATOR, -560, 1100)  # lift brush
     utime.sleep_ms(500)
-    gyro_follow(heading=9 , gain=GAIN, speed=40, distance=200) #forward to activate mission 2
-    gyro_follow(heading=4, gain=-GAIN, speed=-40, distance=-200) #reverse
-    gyro_turn(heading=0, speed=20) #recenter
+    gyro_follow(
+        heading=9, gain=GAIN, speed=40, distance=200
+    )  # forward to activate mission 2
+    gyro_follow(heading=4, gain=-GAIN, speed=-40, distance=-200)  # reverse
+    gyro_turn(heading=0, speed=20)  # recenter
 
     utime.sleep_ms(50)
     gyro_follow(
@@ -421,13 +444,13 @@ def WillemDafoe_4_main():
     utime.sleep_ms(1000)
 
 
-def Feetpics_5_main():
+def Run_5_Drop():
     gain = 0.2
-    gyro_follow(heading=0, gain=gain, speed=75, distance=1100)
+    gyro_follow(heading=0, gain=gain, speed=75, distance=950)
     gyro_follow(heading=0, gain=-gain, speed=-75, distance=-1050)
 
 
-def Zaza_6_main():
+def Run_4_Water():
     GAIN = 2
 
     # Uncover Boat
@@ -475,10 +498,10 @@ def Zaza_6_main():
     print("done")
 
 
-def Mercy_Dash():
+def Run_Away():
     gyro_follow(heading=0, gain=0.2, speed=75, distance=3700)
 
 
 if __name__ == "__main__":
     init()
-    WillemDafoe_4_main()
+    Run_1_Rock()
