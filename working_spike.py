@@ -1,4 +1,4 @@
-# LEGO slot:1 autostart
+# LEGO slot:4 autostart
 import color
 import color_sensor
 import motor
@@ -304,13 +304,13 @@ def Run_2_Silo():
     motor.run_to_absolute_position(LEFT_ACTUATOR, 0, 300)
     motor.run_to_absolute_position(RIGHT_ACTUATOR, 0, 300)
     # Travel
-    gyro_follow(heading=0, gain=0.2, speed=35, distance=815)
+    gyro_follow(heading=0, gain=0.2, speed=50, distance=785)
 
     # Turn to align with silo
-    gyro_turn(heading=-13, speed=15)
+    gyro_turn(heading=-14, speed=15)
 
     # Push Silo lever 5 times
-    for i in range(5):
+    for i in range(4):
         motor.run_for_degrees(RIGHT_ACTUATOR, 580, 450)
         utime.sleep_ms(800)
         motor.run_for_degrees(RIGHT_ACTUATOR, -580, 375)
@@ -354,7 +354,7 @@ def Run_3_Travel():
     gyro_follow(heading=42, gain=GAIN, speed=55, distance=50)
     motor.run_for_degrees(RIGHT_ACTUATOR, 400, 360)
     utime.sleep_ms(1500)
-    gyro_follow(heading=42, gain=-GAIN, speed=-50, distance=-350)
+    gyro_follow(heading=42, gain=-GAIN, speed=-50, distance=-300)
     gyro_follow(heading=42, gain=GAIN, speed=50, distance=100)
     motor.run_for_degrees(RIGHT_ACTUATOR, -400, 360)
     utime.sleep_ms(250)
@@ -362,16 +362,16 @@ def Run_3_Travel():
 
     # Travel
     gyro_turn(heading=90)
-    motor.run_for_degrees(LEFT_ACTUATOR, -540, 360)
+    motor.run_for_degrees(LEFT_ACTUATOR, -580, 360)
     utime.sleep_ms(200)
-    gyro_follow(heading=90, gain=GAIN, speed=50, distance=650)
+    gyro_follow(heading=90, gain=GAIN, speed=50, distance=575)
 
     # Collect sample
     gyro_turn(heading=0)
-    gyro_follow(heading=0, gain=GAIN, speed=50, distance=200)
-    motor.run_for_degrees(LEFT_ACTUATOR, 180, 400)
-    utime.sleep_ms(200)
-    gyro_follow(heading=0, gain=-GAIN, speed=-50, distance=-300)
+    gyro_follow(heading=0, gain=GAIN, speed=40, distance=200)
+    motor.run_for_degrees(LEFT_ACTUATOR, 180, 450)
+    utime.sleep_ms(300)
+    gyro_follow(heading=0, gain=-GAIN, speed=-50, distance=-340)
     motor.run_for_degrees(LEFT_ACTUATOR, 360, 360)
 
     # Travel
@@ -381,42 +381,33 @@ def Run_3_Travel():
     gyro_turn(heading=45)
     gyro_follow(heading=45, gain=GAIN, speed=50, distance=275)
     gyro_turn(heading=90)
-    gyro_follow(heading=90, gain=GAIN, speed=50, distance=400)
+    gyro_follow(heading=90, gain=GAIN, speed=50, distance=500)
     gyro_turn(heading=-40)
 
     # Statue
     motor.run_for_degrees(RIGHT_ACTUATOR, 400, 360)
     utime.sleep_ms(1000)
-    gyro_turn(heading=0, speed=20)
+    gyro_turn(heading=-10, speed=20)
     motor.run_for_degrees(RIGHT_ACTUATOR, -400, 360)
     utime.sleep_ms(2000)
 
-    # Return Home
-    gyro_turn(heading=0, speed=40)
-    gyro_follow(heading=0, gain=GAIN, speed=50, distance=1750)
+    gyro_turn(heading=90, speed=20)
+    gyro_follow(heading=90, gain=GAIN, speed=50, distance=250)
 
-    motor.run_to_absolute_position(RIGHT_ACTUATOR, 0, 1000)
-    utime.sleep_ms(300)
-
-    # gyro_follow(heading=45, gain=GAIN, speed=50, distance=1100)
-    # gyro_turn(heading=-50, speed=20)
-    # motor.run_for_degrees(RIGHT_ACTUATOR, 400, 360)
-    # utime.sleep_ms(200)
-    # gyro_follow(heading=-50, gain=GAIN, speed=50, distance=500)
-    # motor.run_for_degrees(RIGHT_ACTUATOR, -400, 360)
-    # utime.sleep_ms(2000)
-    # gyro_follow(heading=-50, gain=-GAIN, speed=-50, distance=-800)
-    # gyro_follow(
-    #     heading=0,
-    #     gain=-GAIN,
-    #     speed=-75,
-    #     distance=None,
-    #     condition=lambda: color_sensor.color(COLOUR_SENSOR) == color.GREEN
-    #     or color_sensor.color(COLOUR_SENSOR) == color.RED,
-    # )
+    gyro_turn(heading=45, speed=20)
+    gyro_follow(heading=45, gain=GAIN, speed=50, distance=675)
+    gyro_turn(heading=-47, speed=20)
+    motor.run_for_degrees(RIGHT_ACTUATOR, 400, 360)
+    utime.sleep_ms(200)
+    gyro_follow(heading=-47, gain=GAIN, speed=50, distance=500)
+    gyro_follow(heading=53, gain=GAIN, speed=40, distance=100)
+    motor.run_for_degrees(RIGHT_ACTUATOR, -200, 360)
+    utime.sleep_ms(3000)
+    gyro_follow(heading=-47, gain=-GAIN, speed=-50, distance=-800)
+    gyro_follow(heading=0, gain=-GAIN, speed=-75, distance=600)
 
 
-def Run_6_GREEN():
+def Run_7_GREEN():
     GAIN = 2
     print("willy")
 
@@ -444,26 +435,48 @@ def Run_6_GREEN():
     utime.sleep_ms(1000)
 
 
-def Run_5_Drop():
+def Run_4_Drop():
     gain = 0.2
-    gyro_follow(heading=0, gain=gain, speed=75, distance=950)
-    gyro_follow(heading=0, gain=-gain, speed=-75, distance=-1050)
+    gyro_follow(heading=0, gain=gain, speed=100, distance=950)
+    gyro_follow(heading=0, gain=-gain, speed=-100, distance=-1050)
 
 
-def Run_4_Water():
+def Run_5_Crane():
     GAIN = 2
 
+    gyro_follow(heading=0, gain=GAIN, speed=60, distance=300)
+    gyro_turn(heading=30, speed=30)
+    gyro_follow(heading=30, gain=GAIN, speed=60, distance=700)
+    gyro_turn(heading=0, speed=30)
+    gyro_follow(heading=0, gain=GAIN, speed=50, distance=400)
+    # Raise Crane
+    gyro_turn(heading=-84, speed=25)
+    utime.sleep_ms(100)
+    gyro_follow(heading=-84, gain=GAIN, speed=40, distance=253)
+    gyro_turn(heading=-84, speed=25)
+    motor.run_for_degrees(LEFT_ACTUATOR, -800, -200)
+    utime.sleep_ms(2500)
+
+    gyro_follow(heading=-90, gain=-GAIN, speed=-40, distance=-250)
+    gyro_turn(heading=0, speed=40)
+    gyro_follow(heading=0, gain=-GAIN, speed=-100, distance=-1600)
+
+    print("done")
+
+
+def Run_6_Boat():
+    GAIN = 2
     # Uncover Boat
-    gyro_follow(heading=-1, gain=GAIN, speed=30, distance=820)
+    gyro_follow(heading=-1, gain=GAIN, speed=50, distance=820)
     utime.sleep_ms(200)
-    gyro_follow(heading=0, gain=-GAIN, speed=-25, distance=-100)
+    gyro_follow(heading=0, gain=-GAIN, speed=-55, distance=-120)
 
     # Raise Boat
-    gyro_turn(heading=75, speed=15)
+    gyro_turn(heading=75, speed=25)
     utime.sleep_ms(100)
-    gyro_follow(heading=75, gain=GAIN, speed=30, distance=210)
-    gyro_turn(heading=0, speed=15)
-    gyro_follow(heading=0, gain=GAIN, speed=30, distance=300)
+    gyro_follow(heading=75, gain=GAIN, speed=40, distance=180)
+    gyro_turn(heading=0, speed=25)
+    gyro_follow(heading=0, gain=GAIN, speed=40, distance=300)
     utime.sleep_ms(100)
 
     # Drop Flag
@@ -473,28 +486,6 @@ def Run_4_Water():
     utime.sleep_ms(500)
 
     gyro_follow(heading=10, gain=-GAIN, speed=-100, distance=-1000)
-
-    # gyro_turn(heading=0, speed=-15)
-    # gyro_follow(heading=0, gain=GAIN, speed=27, distance=625)
-
-    # # Raise Crane
-    # gyro_turn(heading=-85, speed=10)
-    # utime.sleep_ms(100)
-    # gyro_follow(heading=-85, gain=GAIN, speed=27, distance=253)
-    # gyro_turn(heading=-85, speed=10)
-    # motor.run_for_degrees(LEFT_ACTUATOR, -800, -200)
-    # utime.sleep_ms(2500)
-
-    # gyro_follow(heading=-90, gain=-GAIN, speed=-27, distance=-170)
-    # gyro_turn(heading=180, speed=15)
-    # gyro_follow(heading=180, gain=GAIN, speed=40, distance=475)
-    # gyro_turn(heading=-90, speed=15)
-    # gyro_follow(heading=-90, gain=GAIN, speed=27, distance=100)
-    # gyro_turn(heading=0, speed=15)
-    # gyro_follow(heading=0, gain=GAIN, speed=40, distance=250)
-    # gyro_follow(heading=0, gain=-GAIN, speed=-27, distance=-25)
-    # motor.run_for_degrees(RIGHT_ACTUATOR, 90, 120)
-    # gyro_follow(heading=-10, gain=-GAIN, speed=-27, distance=-400)
     print("done")
 
 
@@ -504,4 +495,4 @@ def Run_Away():
 
 if __name__ == "__main__":
     init()
-    Run_1_Rock()
+    Run_3_Travel()
