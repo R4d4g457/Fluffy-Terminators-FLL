@@ -430,15 +430,16 @@ def Zaza_6_main():
     GAIN = 0.2
 
     # Uncover Boat
-    gyro_follow(heading=0, gain=GAIN, speed=40, distance=810)
-    gyro_follow(heading=0, gain=-GAIN, speed=-25, distance=-100)
-
+    gyro_follow(heading=0, gain=GAIN, speed=70, distance=810)
+    gyro_follow(heading=0, gain=-GAIN, speed=-50, distance=-200)
+   
     # Travel
     gyro_turn(heading=75, speed=15)
     utime.sleep_ms(100)
-    gyro_follow(heading=75, gain=GAIN, speed=30, distance=400)
+    gyro_follow(heading=75, gain=GAIN, speed=70, distance=200)
     utime.sleep_ms(100)
     gyro_turn(heading=0, speed=-15)
+    utime.sleep(999)
     gyro_follow(
         heading=0,
         gain=GAIN,
@@ -449,21 +450,21 @@ def Zaza_6_main():
     # Raise Crane
     gyro_turn(heading=-85, speed=10)
     utime.sleep_ms(100)
-    gyro_follow(heading=-85, gain=GAIN, speed=27, distance=253)
+    gyro_follow(heading=-85, gain=GAIN, speed=70, distance=253)
     gyro_turn(heading=-85, speed=10)
     motor.run_for_degrees(LEFT_ACTUATOR, -800, -200)
     utime.sleep_ms(2500)
 
-    gyro_follow(heading=-90, gain=-GAIN, speed=-27, distance=-170)
+    gyro_follow(heading=-90, gain=-GAIN, speed=-70, distance=-170)
     gyro_turn(heading=180, speed=15)
-    gyro_follow(heading=180, gain=GAIN, speed=40, distance=475)
+    gyro_follow(heading=180, gain=GAIN, speed=70, distance=475)
     gyro_turn(heading=-90, speed=15)
-    gyro_follow(heading=-90, gain=GAIN, speed=27, distance=100)
+    gyro_follow(heading=-90, gain=GAIN, speed=70, distance=100)
     gyro_turn(heading=0, speed=15)
-    gyro_follow(heading=0, gain=GAIN, speed=40, distance=250)
-    gyro_follow(heading=0, gain=-GAIN, speed=-27, distance=-25)
+    gyro_follow(heading=0, gain=GAIN, speed=70, distance=250)
+    gyro_follow(heading=0, gain=-GAIN, speed=-70, distance=-25)
     motor.run_for_degrees(RIGHT_ACTUATOR, 90, 120)
-    gyro_follow(heading=-10, gain=-GAIN, speed=-27, distance=-400)
+    gyro_follow(heading=-10, gain=-GAIN, speed=-70, distance=-400)
     print("done")
 
 
@@ -473,4 +474,4 @@ def Mercy_Dash():
 
 if __name__ == "__main__":
     init()
-    WillemDafoe_4_main()
+    
